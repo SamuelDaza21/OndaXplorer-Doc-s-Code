@@ -78,6 +78,7 @@ body{
     align-items: center; /* Centra el contenido verticalmente */
     justify-content: flex-start; /* Alinea el contenido a la izquierda */
 }
+
 /*Comandos para la frase Bienvenidos a OndaXplorer y parrafo*/
 .texto {
     width: 50%;
@@ -414,31 +415,187 @@ nav {
 }
 /*Texto alternativo del buscador*/
 .glass {
-  position:fixed; /* Posiciona el contenedor de vidrio borroso */
+  position: fixed;
   bottom: 50px;
   right: 50px;
   width: 300px;
-  height: 400px;
+  height: auto;
 }
 
 .glass-effect {
   width: 100%;
-  height: 100%;
   padding: 20px;
-  background: rgba(255, 255, 255, 0.1); /* Fondo blanco semitransparente */
-  border-radius: 15px; /* Redondea las esquinas del contenedor */
-  backdrop-filter: blur(10px); /* Efecto de vidrio borroso */
-  box-shadow: 0 0 15px rgba(96, 98, 241, 0.1); /* Sombra sutil para el efecto de profundidad */
-  color: #fff; /* Color del texto */
-  text-align: center; /* Centra el texto */
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 15px rgba(96, 98, 241, 0.1);
+  color: #fff;
+  text-align: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center; /* Centra los elementos hijos horizontalmente */
+  align-items: center;
 }
 
-/* Estilo global para h1 y p */
 h1, p {
-  margin: 0; /* Elimina los márgenes predeterminados alrededor de los elementos <h1> y <p> para un ajuste más fino */
-  padding: 0; /* Elimina el padding predeterminado alrededor de los elementos <h1> y <p> para evitar espacios adicionales */
+  margin: 0;
+  padding: 0;
+}
+
+.sociales {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.redes {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 15px;
+}
+
+.redes li {
+  list-style: none;
+}
+
+.redes li a {
+  text-decoration: none;
+  font-size: 32px; /* Tamaño de los íconos */
+  color: #fff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+}
+
+/* Colores específicos por red social */
+
+.redes li a.facebook:hover {
+  color: #ffffff; /* Azul de Facebook */
+  filter: drop-shadow(0 0 5px #1877F2) 
+          drop-shadow(0 0 10px #1877F2) 
+          drop-shadow(0 0 15px #1877F2)
+          drop-shadow(0 0 20px #1877F2); /* Efecto de neón */
+}
+
+
+.redes li a.instagram:hover {
+  display: inline-block; /* Para permitir aplicar el fondo de gradiente */
+  background-image: linear-gradient(135deg, #f3ae76, #da669a, #9268aa, #8288ca); /* Gradiente diagonal */
+  background-clip: text; /* Aplica el gradiente solo al texto */
+  -webkit-background-clip: text; /* Soporte para Safari */
+  color: transparent; /* El texto debe ser transparente para mostrar el gradiente */
+  filter: drop-shadow(0 0 5px #f58529) 
+  drop-shadow(0 0 10px #dd2a7b) 
+  drop-shadow(0 0 15px #8134af)
+  drop-shadow(0 0 20px #515bd4); /* Efecto de neón */
+}
+
+.redes li a.github:hover {
+  color: #333; /* Gris oscuro de GitHub */
+  filter: drop-shadow(0 0 5px #707070) 
+          drop-shadow(0 0 10px #707070) 
+          drop-shadow(0 0 15px #707070)
+          drop-shadow(0 0 20px #707070); /* Efecto de neón */
+}
+
+.redes li a.twitter:hover {
+  color: #ffffff;
+  filter: drop-shadow(0 0 5px #1da1f2) 
+          drop-shadow(0 0 10px #1da1f2) 
+          drop-shadow(0 0 15px #1da1f2)
+          drop-shadow(0 0 20px #1da1f2); /* Efecto de neón */
+}
+/*Contenidos Pagina Inicial*/
+
+.main-card {
+  animation: FadeIn 2s ease-in-out;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  color: #fff;
+  text-align:center;
+  position: fixed;
+  top:250px;
+  right: 650px;
+  padding: 20px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  width: 150px;
+  height: 150px;
+  margin: auto;
+}
+
+.main-card i {
+  font-size: 50px;
+}
+
+.cards-wrapper {
+  animation: FadeIn 2s ease-in-out;
+  position: fixed;
+  bottom:5px;
+  right: 100px;
+  visibility: hidden;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  transition: opacity 0.5s ease;
+}
+
+.card-item {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  color: #fff;
+  text-align: center;
+  padding: 20px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: 100px;
+  height: 100px;
+}
+
+.card-item i {
+  font-size: 30px;
+}
+
+.card-item p {
+  margin: 10px 0 0;
+}
+
+.card-item:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.7);
+}
+
+.content {
+  position: fixed;
+  top: 10;
+  left: 10;
+  width: 100%;
+  height: 100%;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.content-card {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  color: #fff;
+  text-align: center;
+  padding: 20px;
+  width: 200px;
+  height: 100px;
+  margin: 10px;
+  display: none;
 }
