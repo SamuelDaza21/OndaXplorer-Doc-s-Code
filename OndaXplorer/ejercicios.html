@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="img/logopagina.png" type="image">
+    <title>Ejercicios</title>
+    <!--La siguiente linea me permite importar iconos para el menu-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="ejercicios.css">
+</head>
+<body>
+    <!--Codigo del cuerpo de la pagina web-->
+    <div class="paginaprincipal">
+        <header class="logo-menu">
+            <img src="img/logopagina.png" alt="OndaXplorer" class="">
+            <h1>OndaXplorer</h1>
+            <nav class="menu">
+                <ul>
+                    <li>
+                        <a href="inicio.html" class="icon-item">
+                            <i class="fas fa-home"></i>
+                            <span class="icon-text">Inicio</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="temas.html" class="icon-item">
+                            <i class="fas fa-book"></i>
+                            <span class="icon-text">Temas</span>
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a href="ejercicios.html" class="icon-item">
+                            <i class="fas fa-pencil-alt"></i>
+                            <span class="icon-text">Ejercicios</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="laboratorio.html" class="icon-item">
+                            <i class="fas fa-flask"></i>
+                            <span class="icon-text">Laboratorio</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="info.html" class="icon-item">
+                            <i class="fas fa-info-circle"></i>
+                            <span class="icon-text">Acerca de nosotros</span>
+                        </a>
+                    </li>
+    
+                </ul>
+    
+            </nav>
+        </header>
+        <!--Comandos para crear una barra de busqueda-->
+        <nav>
+            
+            <div class="buscador-container">
+            <form action="https://www.google.com/search" method="get">
+                <div class="buscador-container">
+                    <input type="text" name="q" placeholder="Buscar en Google" required>
+                    <button type="submit" class="button">
+                        <i class="fas fa-search"></i>
+                        <span class="button-text">Buscar</span>
+                    </button>
+                </div>
+            </form>     
+            </div>
+        </nav>
+        <!--Recuadro de texto bajo la barra de buscar
+        <div class="glass">
+            <div class="glass-effect">
+            <h1>Proximamente Información de OndaXplorer</h1>
+            <p>Libros, fórmulas, redes sociales y más.</p>
+        
+            </div>
+        </div>-->
+        <!--PAGINA DE CUESTIONARIOS-->
+        <section class="panel">
+          <h2 class="titulo-ejercicios">Ejercicios</h2>
+          <div class="tarjetas">
+              <div class="tarjeta color1" onclick="window.location.href='SIU.html';">
+                  <i class="fas fa-ruler icono"></i>
+                  <p class="segundo-texto">Magnitudes Fundamentales</p>
+              </div> 
+              <div class="tarjeta color2" onclick="window.location.href='Newton.html';">
+                  <i class="fas fa-balance-scale icono"></i>
+                  <p class="segundo-texto">Dinámica de Newton</p>
+              </div>
+              <div class="tarjeta color3" onclick="window.location.href='Energia.html';">
+                  <i class="fas fa-bolt icono"></i>
+                  <p class="segundo-texto">Energías</p>
+              </div>
+              <div class="tarjeta color4" onclick="window.location.href='Cinematica.html';">
+                  <i class="fas fa-running icono"></i>
+                  <p class="segundo-texto">Cinemática</p>
+              </div>
+              <div class="tarjeta color5" onclick="window.location.href='Ondas.html';">
+                  <i class="fas fa-wave-square icono"></i>
+                  <p class="segundo-texto">Ondas</p>
+              </div>
+              <div class="tarjeta color6" onclick="window.location.href='Espejos.html';">
+                  <i class="fas fa-microscope icono"></i>
+                  <p class="segundo-texto">Reflexión y Refracción</p>
+              </div>
+          </div>
+      </section>
+        
+        
+        </div>
+        <!-- Redes sociales debajo del texto -->
+  <footer>
+    <div class="sociales">
+      <ul class="redes">
+        <!-- Facebook -->
+        <li>
+          <a href="https://www.facebook.com/share/LvQiRqq2j7ahfH8N/?mibextid=qi2Omg" target="_blank" class="facebook">
+            <i class="fab fa-facebook"></i>
+          </a>
+        </li>
+
+        <!-- Instagram -->
+        <li>
+          <a href="https://www.instagram.com/ondaxplorer?igsh=enNrM3UxZW9rN2o0" target="_blank" class="instagram">
+            <i class="fab fa-instagram"></i>
+          </a>
+        </li>
+
+        <!-- Threads -->
+        <li>
+          <a href="https://twitter.com/" target="_blank" class="twitter">
+              <i class="fab fa-twitter"></i> <!-- Usamos el ícono de Twitter -->
+            </a>
+        </li>
+
+        <!-- GitHub -->
+        <li>
+          <a href="https://github.com/tu-usuario" target="_blank" class="github">
+            <i class="fab fa-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+</footer>
+<script src="codigo.js"></script>
+</body>
+</html>

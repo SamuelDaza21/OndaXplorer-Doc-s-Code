@@ -1,4 +1,3 @@
-//comandos para el registro y la creacion de cuenta de OndaXplorer
 // Selección de elementos
 const loginCard = document.querySelector('.card-login');
 const registerCard = document.querySelector('.card-register');
@@ -17,58 +16,38 @@ showLogin.addEventListener('click', () => {
   loginCard.classList.add('active');
 });
 
-//PAGINAS
-
+// Mostrar el contenido principal si es necesario
 document.addEventListener('DOMContentLoaded', () => {
-  const paginaregistro = document.querySelector('.paginaregistro');
-  const paginaprincipal = document.querySelector('.paginaprincipal');
-
-  function showMainContent() {
-    paginaregistro.classList.add('hide');
-    paginaprincipal.classList.add('show');
-  }
-
   document.addEventListener('keydown', (event) => {
-    if (event.key === 'Enter' || event.key === ' ' || event.key === 'Spacebar') {
-      showMainContent();
+    if (event.key === 'Enter' || event.key === ' ') {
+      // Acción cuando se presiona "Enter" o "Espacio"
+      console.log("Iniciar sesión o registro.");
     }
   });
-
-  //document.addEventListener('click', showMainContent);
 });
 
-//Tarjetas del Inicio.
-function toggleCards() {
-  const wrapper = document.getElementById('cards-wrapper');
-  const content = document.getElementById('content');
-  const mainCard = document.getElementById('main-card');
 
-  const wrapperVisibility = window.getComputedStyle(wrapper).visibility;
+//temporal cambio de pantalla
+document.addEventListener('DOMContentLoaded', () => {
+  // Función para manejar la navegación
+  const navigateToPage = () => {
+      const contenido = document.querySelector('.paginaregistro');
+      
+      // Añadir clase para la animación
+      contenido.classList.add('slide-out');
 
-  if (wrapperVisibility === 'visible') {
-      // Ocultar tarjetas y contenido
-      wrapper.style.visibility = 'hidden';
-      wrapper.style.opacity = '0';  // Para hacer una transición suave
-      content.style.display = 'none';
-      mainCard.style.display = 'block';
-  } else {
-      // Mostrar tarjetas
-      wrapper.style.visibility = 'visible';
-      wrapper.style.opacity = '1';  // Asegurar que sea visible con opacidad
-      mainCard.style.display = 'none';
-  }
-}
+      // Esperar a que termine la animación antes de redirigir
+      setTimeout(() => {
+          window.location.href = 'inicio.html'; // Cambia a la URL deseada
+      }, 500); // Duración de la animación en milisegundos
+  };
 
+  // Evento para teclas específicas
+  document.addEventListener('keydown', (event) => {
+      if (event.key === ' ') { // Si se presiona la barra espaciadora
+          event.preventDefault(); // Evitar el comportamiento por defecto
+          navigateToPage();
+      }
+  });
+});
 
-
-function showContent(cardId) {
-  const content = document.getElementById('content');
-  const contentCard = document.getElementById(`content-${cardId}`);
-
-  // Ocultar todas las tarjetas de contenido
-  document.querySelectorAll('.content-card').forEach(card => card.style.display = 'none');
-
-  // Mostrar la tarjeta de contenido seleccionada
-  contentCard.style.display = 'block';
-  content.style.display = 'flex';
-}
