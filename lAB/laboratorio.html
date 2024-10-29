@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laboratorio OndaXplorer</title>
+    <link rel="stylesheet" href="laboratorio.css"> <!-- Enlace al archivo CSS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.18.0/matter.min.js"></script>
+    <script src="laboratorio.js" defer></script> <!-- Enlace al archivo JS -->
+</head>
+<body>
+    <div class="container">
+        
+    
+        <div class="experiment" id="espejos">
+            <h2>Espejos</h2>
+            <div class="controls">
+                <div id="buttonsEspejos">
+                    <a href="#" class="btn btn-5" id="btnConcavo" title="Espejo Cóncavo">Espejo Cóncavo</a>
+                    <a href="#" class="btn btn-5" id="btnConvexo" title="Espejo Convexo">Espejo Convexo</a>
+                </div>
+                <div class="control-left">
+                </div>
+                <div id="espejosCanvas">
+                    <!-- Aquí irá el canvas de p5.js -->
+                </div>
+                <div class="control-right">
+                    <label for="inputPos">Posición (Entre 50-350): </label>
+                    <input type="number" id="inputPos" min="50" max="350" value="200">
+                    <label for="inputFoco">Posición Focal (Entre 50-175): </label>
+                    <input type="number" id="inputFoco" min="50" max="175" value="50" oninput="actualizarCentroDesdeFoco()">
+                    <label for="inputCentro">centro de curvatura (Entre 100-350): </label>
+                    <input type="number" id="inputCentro" min="100" max="350" value="200" oninput="actualizarFocoDesdeCentro()">
+                </div>
+            </div>
+    
+            <div>
+                <button id="setPosBtn" class="btn btn-5">Establecer Posición</button>
+                <button id="resetEspejos" class="btn btn-5">Resetear</button>
+                <div id="aviso" style="color:red; display:none;"></div> <!-- Contenedor para el aviso -->
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>
