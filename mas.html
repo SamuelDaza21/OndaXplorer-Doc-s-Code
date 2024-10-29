@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Laboratorio Virtual: Sistema Masa-Resorte</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+            background-image: url(img/f1.jpg); /* Light gray background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 20px;
+            margin: 0;
+            color: #333;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+      font-size: 2.5rem;
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 20px;
+      justify-content: center;
+    }
+
+    .control-group {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .control-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+
+    .control-group input[type="range"] {
+      width: 100%;
+    }
+
+    .simulation {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .mass-spring {
+      position: relative;
+      height: 300px;
+      background-color: #e0eafc;
+      margin: 20px 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 2px solid #bbb;
+    }
+
+    .spring {
+      stroke: #0077b6;
+      stroke-width: 3;
+      fill: none;
+    }
+
+    .mass {
+      width: 40px;
+      height: 40px;
+      background-color: #ff634700; /* color rojo tomate */
+      border-radius: 50%;
+      position: absolute;
+      transform: translateX(-50%);
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .buttons {
+      margin-bottom: 20px;
+    }
+
+    .buttons button {
+      padding: 10px 20px;
+      background-color: #0077b6;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-right: 10px;
+    }
+
+    .buttons button:hover {
+      background-color: #005f88;
+    }
+
+    .simulation-data p {
+      font-size: 1.1rem;
+      line-height: 1.5;
+      margin: 10px 0;
+    }
+
+    .mass-spring svg {
+      z-index: 1;
+    }
+
+    .mass {
+      z-index: 2;
+      bottom: 0;
+    }
+
+    .container {
+            max-width: 1200px; /* Ancho máximo del contenedor */
+            margin: 20px auto; /* Centramos el contenedor */
+            padding: 20px; /* Espaciado interno */
+            background: white; /* Color de fondo del contenedor */
+            border-radius: 8px; /* Bordes redondeados */
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1); /* Sombra */
+        }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Laboratorio Virtual: Sistema Masa-Resorte</h1>
+
+    <div class="controls">
+        <div class="control-group">
+            <label for="mass">Masa (kg): <span id="massValue">1</span></label>
+            <input type="range" id="mass" min="0.1" max="10" step="0.1" value="1">
+        </div>
+        <div class="control-group">
+            <label for="springConstant">Constante del resorte (N/m): <span id="springConstantValue">100</span></label>
+            <input type="range" id="springConstant" min="10" max="1000" step="10" value="100">
+        </div>
+        <div class="control-group">
+            <label for="amplitude">Amplitud inicial (m): <span id="amplitudeValue">0.5</span></label>
+            <input type="range" id="amplitude" min="0.01" max="1" step="0.01" value="0.5">
+        </div>
+        <div class="control-group">
+            <label for="friction">Fricción: <span id="frictionValue">0</span></label>
+            <input type="range" id="friction" min="0" max="1" step="0.01" value="0">
+        </div>
+    </div>
+
+    <div class="buttons">
+        <button id="startButton">Iniciar</button>
+        <button id="resetButton">Reiniciar</button>
+    </div>
+
+    <div class="simulation">
+        <h2>Visualización del Sistema</h2>
+        <div class="mass-spring">
+            <!-- El resorte está hecho con SVG para que parezca un resorte real -->
+            <svg id="springSVG" width="100" height="100%" viewBox="0 0 100 300" xmlns="http://www.w3.org/2000/svg">
+                <path id="springPath" class="spring" d="M50 0 Q 60 20, 40 40 T 50 80 T 50 120 T 50 160 T 50 200 T 50 240 T 50 280" />
+            </svg>
+            <div class="mass" id="mass"></div>
+        </div>
+    </div>
+
+    <div class="simulation-data">
+        <h2>Datos del Sistema</h2>
+        <p>Período: <span id="periodValue">0</span> s</p>
+        <p>Frecuencia angular: <span id="angularFrequencyValue">0</span> rad/s</p>
+        <p>Posición actual: <span id="positionValue">0</span> m</p>
+        <p>Velocidad actual: <span id="velocityValue">0</span> m/s</p>
+    </div>
+
+
+  <script>
+    // Variables del sistema
+    let mass = 1;
+    let springConstant = 100;
+    let initialAmplitude = 0.5;
+    let friction = 0;
+    let time = 0;
+    let isRunning = false;
+    let position = initialAmplitude;
+    let velocity = 0;
+    let animationFrame;
+
+    // Referencias a los elementos de la interfaz
+    const massElement = document.getElementById('mass');
+    const springConstantElement = document.getElementById('springConstant');
+    const amplitudeElement = document.getElementById('amplitude');
+    const frictionElement = document.getElementById('friction');
+    const startButton = document.getElementById('startButton');
+    const resetButton = document.getElementById('resetButton');
+    const massDisplay = document.getElementById('mass');
+    const springPath = document.getElementById('springPath');
+    const periodDisplay = document.getElementById('periodValue');
+    const angularFrequencyDisplay = document.getElementById('angularFrequencyValue');
+    const positionDisplay = document.getElementById('positionValue');
+    const velocityDisplay = document.getElementById('velocityValue');
+
+    // Funciones de control
+    function updateParameters() {
+      mass = parseFloat(massElement.value);
+      springConstant = parseFloat(springConstantElement.value);
+      initialAmplitude = parseFloat(amplitudeElement.value);
+      friction = parseFloat(frictionElement.value);
+
+      document.getElementById('massValue').textContent = mass;
+      document.getElementById('springConstantValue').textContent = springConstant;
+      document.getElementById('amplitudeValue').textContent = initialAmplitude;
+      document.getElementById('frictionValue').textContent = friction;
+
+      calculateSystem();
+    }
+
+    function calculateSystem() {
+      const angularFrequency = Math.sqrt(springConstant / mass);
+      const period = 2 * Math.PI / angularFrequency;
+
+      angularFrequencyDisplay.textContent = angularFrequency.toFixed(2);
+      periodDisplay.textContent = period.toFixed(2);
+    }
+
+    function updateSimulation(elapsedTime) {
+      const angularFrequency = Math.sqrt(springConstant / mass);
+      const dampingFactor = friction / (2 * mass);
+      const dampedFrequency = Math.sqrt(angularFrequency ** 2 - dampingFactor ** 2);
+
+      position = initialAmplitude * Math.exp(-dampingFactor * time) * Math.cos(dampedFrequency * time);
+      velocity = -initialAmplitude * dampedFrequency * Math.exp(-dampingFactor * time) * Math.sin(dampedFrequency * time);
+
+      // Actualizar la masa (bola roja)
+      const normalizedPosition = 100 + position * 100; // ajustar la escala de la posición
+      massDisplay.style.bottom = `${normalizedPosition}px`;
+
+      // Actualizar el resorte
+      springPath.setAttribute('d', generateSpringPath(normalizedPosition));
+
+      // Actualizar los datos
+      positionDisplay.textContent = position.toFixed(2);
+      velocityDisplay.textContent = velocity.toFixed(2);
+
+      time += elapsedTime / 1000;
+    }
+
+    function generateSpringPath(position) {
+      const segments = 7;
+      const amplitude = 20;
+      let path = `M50 0 `;
+      for (let i = 0; i <= segments; i++) {
+        const y = (position / segments) * i;
+        const x = i % 2 === 0 ? 50 - amplitude : 50 + amplitude;
+        path += `L${x} ${y} `;
+      }
+      return path;
+    }
+
+    // Animación del sistema
+    function animate(currentTime) {
+      if (!isRunning) return;
+      updateSimulation(16); // Aproximadamente 60 FPS
+      animationFrame = requestAnimationFrame(animate);
+    }
+
+    // Control de inicio y reinicio
+    startButton.addEventListener('click', () => {
+      isRunning = !isRunning;
+      if (isRunning) {
+        startButton.textContent = 'Detener';
+        animationFrame = requestAnimationFrame(animate);
+      } else {
+        cancelAnimationFrame(animationFrame);
+        startButton.textContent = 'Iniciar';
+      }
+    });
+
+    resetButton.addEventListener('click', () => {
+      isRunning = false;
+      time = 0;
+      position = initialAmplitude;
+      velocity = 0;
+      cancelAnimationFrame(animationFrame);
+      updateParameters();
+      startButton.textContent = 'Iniciar';
+    });
+
+    // Inicialización
+    updateParameters();
+  </script>
+
+</body>
+</html>

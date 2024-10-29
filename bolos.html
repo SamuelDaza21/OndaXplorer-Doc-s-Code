@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laboratorio Virtual de las Leyes de Newton</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-image: url(img/f1.jpg); /* Light gray background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 20px;
+            margin: 0;
+            color: #333;
+        }
+
+        #lab-container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            max-width: 900px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #2196F3;
+            text-align: center;
+            font-size: 2.5em;
+        }
+
+        .law-button {
+            background-color: #2196F3;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .law-button:hover {
+            background-color: #1976D2;
+        }
+
+        #experiment-container {
+            margin-top: 20px;
+        }
+
+        #canvas-container {
+            width: 100%;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        canvas {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .control-group {
+            margin-top: 20px;
+            background: #e7f3fe;
+            border-radius: 5px;
+            padding: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            text-align: center;
+            font-size: 16px;
+            margin: 4px 0;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #388E3C;
+        }
+
+        #explanation {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e8f5e9;
+            border-radius: 5px;
+            border: 1px solid #4CAF50;
+        }
+
+        #law-title {
+            color: #2196F3;
+            font-size: 1.8em;
+            text-align: center;
+        }
+
+        .activity-panel {
+            display: none;
+        }
+
+        .active {
+            display: block;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #333;
+            text-align: center;
+        }
+
+        #graph-container {
+            width: 100%;
+            text-align: center;
+        }
+
+        .graph {
+            border: 1px solid #4CAF50;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        /*PRIMER LEY DE NEWTON*/
+        #game-container {
+            text-align: center;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            animation: fadeIn 0.5s;
+            width: 320px; /* Añadido para limitar el ancho */
+        }
+        button {
+            background-color: #4CAF50; /* Verde */
+            border: none;
+            color: white;
+            padding: 15px 25px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 10px 5px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            width: 100%; /* Botones ocupan todo el ancho */
+        }
+        button:hover {
+            background-color: #45a049; /* Verde más oscuro */
+        }
+        input {
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: calc(100% - 22px); /* Ajusta el ancho del input */
+        }
+        #golf-course {
+            width: 300px;
+            height: 150px;
+            background-color: #90EE90; /* Verde pasto */
+            margin: 20px auto;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid #006400; /* Verde oscuro */
+            border-radius: 10px;
+        }
+        #ball {
+            width: 15px; /* Mayor tamaño de la pelota */
+            height: 15px;
+            background-color: #ffffff;
+            border-radius: 50%;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            z-index: 2;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+            transition: transform 0.5s ease;
+        }
+        #hole {
+            width: 20px;
+            height: 20px;
+            background-color: black;
+            border-radius: 50%;
+            position: absolute;
+            z-index: 1;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+        }
+        .star {
+            color: gold;
+            font-size: 30px;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        #result-container {
+            display: none; /* Ocultar por defecto */
+            margin-top: 20px; /* Espacio superior */
+        }
+        #level-display {
+            position: absolute; /* Asegúrate de que esté en una posición absoluta */
+            top: 20px; /* Ajusta la posición superior */
+            left: 50%; /* Centra el nivel horizontalmente */
+            transform: translateX(-50%); /* Corrige el centrado */
+            font-size: 24px; /* Ajusta el tamaño de la fuente según sea necesario */
+            color: #fff; /* Cambia el color según tu diseño */
+            z-index: 10; /* Asegúrate de que esté por encima de otros elementos */
+        }
+    </style>
+</head>
+
+<body>
+    <div id="lab-container">
+        <h1>Laboratorio Virtual de las Leyes de Newton</h1>
+        
+        <div id="experiment-container">
+            <!-- Actividad: Primera Ley -->
+            <div id="activity-1" class="activity-panel active">}
+                <div id="game-container">
+                    <div id="start-screen">
+                        <h1>Golf Newtoniano</h1>
+                        <p>Aplica las leyes de Newron jugando al golf</p>
+                        <button onclick="startLevel(1)">Jugar</button>
+                        <button onclick="showInstructions()">Instrucciones</button>
+                    </div>
+                    <div id="instructions-screen" style="display: none;">
+                        <h2>Instrucciones</h2>
+                        <p>1. Ingresa los valores de fuerza, aceleración, velocidad y ángulo de tiro.</p>
+                        <p>2. Haz clic en "Tirar" para lanzar la bola.</p>
+                        <p>3. Intenta que la bola caiga en el hoyo en un solo tiro.</p>
+                        <p>4. Tienes 3 vidas. Pierdes una si no logras un hoyo en uno.</p>
+                        <button onclick="showStartScreen()">Volver</button>
+                    </div>
+                    <div id="game-screen" style="display: none;">
+                        <h2>Golf Newtoniano - Nivel <span id="level-display"></span></h2>
+                        <div id="golf-course">
+                            <div id="ball"></div>
+                            <div id="hole"></div>
+                        </div>
+                        <div>
+                            <label for="force">Fuerza (N): </label>
+                            <input type="number" id="force" min="0" max="100">
+                        </div>
+                        <div>
+                            <label for="acceleration">Aceleración (m/s²): </label>
+                            <input type="number" id="acceleration" min="0" max="10">
+                        </div>
+                        <div>
+                            <label for="velocity">Velocidad inicial (m/s): </label>
+                            <input type="number" id="velocity" min="0" max="20">
+                        </div>
+                        <div>
+                            <label for="angle">Ángulo de dirección (grados): </label>
+                            <input type="number" id="angle" min="0" max="90">
+                        </div>
+                        <button onclick="shoot()">Tirar</button>
+                        <p>Vidas restantes: <span id="lives">3</span></p>
+                    </div>
+                    <div id="result-container">
+                        <div id="winner-screen" style="display: none;">
+                            <h2>¡Buen Trabajo!</h2>
+                            <p>Has pasado al siguiente nivel. ¡Felicidades!</p>
+                            <div id="stars"></div>
+                            <button onclick="nextLevel()">Siguiente nivel</button>
+                        </div>
+                        <div id="game-over-screen" style="display: none;">
+                            <h2>Game Over</h2>
+                            <p>Has perdido todas tus vidas. ¡Inténtalo de nuevo!</p>
+                            <button onclick="restartGame()">Reiniciar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        //PRIMER LEY JUEGO.
+        
+        let lives = 3;
+        let level = 1;
+        let difficultyMultiplier = 1;
+
+        function showStartScreen() {
+            document.getElementById('game-screen').style.display = 'none';
+            document.getElementById('start-screen').style.display = 'block';
+            document.getElementById('instructions-screen').style.display = 'none';
+            document.getElementById('winner-screen').style.display = 'none';
+            document.getElementById('game-over-screen').style.display = 'none';
+            document.getElementById('result-container').style.display = 'none';
+        }
+
+        function showInstructions() {
+            document.getElementById('start-screen').style.display = 'none';
+            document.getElementById('instructions-screen').style.display = 'block';
+        }
+
+        function startLevel(selectedLevel) {
+            document.getElementById('start-screen').style.display = 'none';
+            document.getElementById('game-screen').style.display = 'block';
+            document.getElementById('level-display').textContent = selectedLevel;
+            level = selectedLevel;
+            resetBall();
+            resetLives();
+            updateDifficulty();
+            moveHole(); // Mover el hoyo a una nueva posición aleatoria
+        }
+
+        function resetBall() {
+            const ball = document.getElementById('ball');
+            ball.style.left = '0px';
+            ball.style.bottom = '0px';
+        }
+
+        function resetLives() {
+            if (level === 1) {
+                lives = 3; // Reinicia las vidas solo al comienzo del juego
+            }
+            document.getElementById('lives').textContent = lives;
+        }
+
+        function updateDifficulty() {
+            difficultyMultiplier = 1 + (level - 1) * 0.5; // Incrementa dificultad con cada nivel
+        }
+
+        function moveHole() {
+            const golfCourse = document.getElementById('golf-course');
+            const hole = document.getElementById('hole');
+            const maxX = golfCourse.clientWidth - hole.clientWidth; // Limite horizontal
+            const maxY = golfCourse.clientHeight - hole.clientHeight; // Limite vertical
+            const randomX = Math.random() * maxX;
+            const randomY = Math.random() * maxY;
+            hole.style.left = randomX + 'px';
+            hole.style.bottom = randomY + 'px';
+        }
+
+        function shoot() {
+            const force = parseFloat(document.getElementById('force').value);
+            const angle = parseFloat(document.getElementById('angle').value);
+            if (isNaN(force) || isNaN(angle)) {
+                alert('Por favor, ingresa valores válidos.');
+                return;
+            }
+
+            // Convertir ángulo a radianes
+            const angleInRadians = angle * (Math.PI / 180);
+
+            // Calcular la distancia en el eje X y Y
+            let distanceX = force * Math.cos(angleInRadians) * difficultyMultiplier;
+            let distanceY = force * Math.sin(angleInRadians) * difficultyMultiplier;
+
+            // Mover la pelota
+            moveBall(distanceX, distanceY);
+        }
+
+        function moveBall(distanceX, distanceY) {
+            const ball = document.getElementById('ball');
+            let ballLeft = parseFloat(ball.style.left);
+            let ballBottom = parseFloat(ball.style.bottom);
+
+            let bounces = 0; // Contador de rebotes
+            const interval = setInterval(() => {
+                // Aumentar el desplazamiento en el eje Y para simular gravedad
+                ballBottom += distanceY * 0.1; // Cambia 0.1 para ajustar la velocidad de caída
+                ballLeft += distanceX * 0.1; // Cambia 0.1 para ajustar la velocidad horizontal
+
+                ball.style.left = ballLeft + 'px';
+                ball.style.bottom = ballBottom + 'px';
+
+                // Verificar colisión con el hoyo
+                if (isInHole(ballLeft, ballBottom)) {
+                    clearInterval(interval);
+                    showWinner();
+                }
+
+                // Verificar si la pelota se sale del campo y rebotar
+                if (ballBottom < 0) { // Si toca el borde inferior
+                    ballBottom = 0; // Reiniciar la posición en Y
+                    distanceY = -distanceY; // Invertir dirección Y
+                    distanceY *= 0.5; // Reducir velocidad en Y (más drástico)
+                    bounces++;
+                }
+
+                if (ballLeft < 0) { // Si toca el borde izquierdo
+                    ballLeft = 0; // Reiniciar la posición en X
+                    distanceX = -distanceX; // Invertir dirección X
+                    distanceX *= 0.5; // Reducir velocidad en X (más drástico)
+                    bounces++;
+                }
+
+                if (ballLeft > (300 - 15)) { // Si toca el borde derecho
+                    ballLeft = 300 - 15; // Reiniciar la posición en X
+                    distanceX = -distanceX; // Invertir dirección X
+                    distanceX *= 0.5; // Reducir velocidad en X (más drástico)
+                    bounces++;
+                }
+
+                if (ballBottom > (150 - 15)) { // Si toca el borde superior
+                    ballBottom = 150 - 15; // Reiniciar la posición en Y
+                    distanceY = -distanceY; // Invertir dirección Y
+                    distanceY *= 0.5; // Reducir velocidad en Y (más drástico)
+                    bounces++;
+                }
+
+                // Si ha rebotado dos veces, detener el movimiento
+                if (bounces >= 2) {
+                    clearInterval(interval); // Detener el intervalo
+                    loseLife(); // Perder una vida si se detiene
+                }
+
+                // Actualizar la posición de la bola
+                ball.style.left = ballLeft + 'px';
+                ball.style.bottom = ballBottom + 'px';
+            }, 50);
+        }
+
+        function isInHole(ballLeft, ballBottom) {
+            const hole = document.getElementById('hole');
+            const holeLeft = parseFloat(hole.style.left);
+            const holeBottom = parseFloat(hole.style.bottom);
+            return (ballLeft >= holeLeft && ballLeft <= holeLeft + 20 && ballBottom <= holeBottom + 20);
+        }
+
+        function loseLife() {
+            lives--;
+            document.getElementById('lives').textContent = lives;
+            if (lives <= 0) {
+                gameOver();
+            } else {
+                resetBall();
+                moveHole(); // Mueve el hoyo nuevamente al reiniciar la bola
+            }
+        }
+
+        function gameOver() {
+            document.getElementById('game-screen').style.display = 'none';
+            document.getElementById('result-container').style.display = 'block';
+            document.getElementById('game-over-screen').style.display = 'block';
+        }
+
+        function showWinner() {
+            document.getElementById('game-screen').style.display = 'none';
+            document.getElementById('result-container').style.display = 'block';
+            document.getElementById('winner-screen').style.display = 'block';
+            createStars();
+        }
+
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            starsContainer.innerHTML = ''; // Limpiar el contenedor de estrellas
+
+            // Mostrar estrellas según las vidas restantes
+            for (let i = 0; i < lives; i++) {
+                const star = document.createElement('span');
+                star.className = 'star';
+                star.textContent = '⭐';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        function nextLevel() {
+            level++;
+            document.getElementById('winner-screen').style.display = 'none';
+            startLevel(level); // Inicia el siguiente nivel
+        }
+
+        function restartGame() {
+            level = 1;
+            lives = 3; // Reiniciar vidas
+            showStartScreen();
+        }
+    </script>
+</body>
+
+</html>
