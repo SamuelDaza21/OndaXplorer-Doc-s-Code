@@ -244,106 +244,193 @@ body {
     visibility: visible;
     transform: translateX(35px);
   }
- /*Texto alternativo del buscador*/
- .glass {
-  position: Fixed;
-  bottom: 100px;
-  right: 1000px;
-  width: 300px;
-  height: auto;
+  /* Estilos generales de la sección */
+/* Estilos para el contenedor */
+.content-container {
+  background-color: white; /* Fondo blanco para diferenciar */
+  border-radius: 10px; /* Bordes suaves */
+  padding: 40px;
+  margin: 20px auto;
+  max-width: 1200px; /* Limitar el ancho para mejor legibilidad */
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+  text-align: center;
 }
 
-.glass-effect {
-  width: 100%;
-  padding: 20px;
-  background: rgba(85, 84, 84, 0.1); /* Semi-transparent medium gray */
-  border-radius: 15px;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); 
-  color: #333333; /* Dark charcoal gray text */
+/* Texto general */
+.content-container h1, .content-container h2, .content-container h3 {
+  color: #292929;
+}
+
+.content-container p {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+/* Estilos para las imágenes del equipo */
+.team-section {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 50px;
+  gap: 20px;
+}
+
+.team-member {
   text-align: center;
+  width: 20%;
+}
+
+.team-member img {
+  width: 100%;
+  max-width: 150px;
+  border-radius: 50%; /* Bordes redondeados */
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2); /* Sombra en las imágenes */
+  margin-bottom: 10px;
+}
+
+.team-member h3 {
+  font-size: 18px;
+  margin-top: 10px;
+  color: #4e4e4e;
+}
+
+/* Mapa embebido */
+iframe {
+  border-radius: 10px; /* Bordes redondeados */
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1); /* Sombra en el mapa */
+  margin-top: 20px;
+}
+
+/* Espacios adicionales entre secciones */
+.content-container h2, .content-container h3 {
+  margin-top: 40px;
+}
+
+.content-container p {
+  color: #555; /* Texto de los párrafos más claro */
+}
+/* Estilos del footer */
+footer {
+  backdrop-filter: blur(10px); /* Efecto de desenfoque */
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); 
+  color: #333333; /* Color del texto */
+  background: rgba(85, 84, 84, 0.1); /* Color de fondo semi-transparente */
+  margin-top: auto;
+  position: relative;
+  padding: 30px 20px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-h1, p {
-  margin: 0;
+.footer-content {
+  display: flex;
+  justify-content: space-between; /* Distribuye los elementos: izquierda, centro, derecha */
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.footer-content img {
+  width: 150px; /* Tamaño ajustado de la imagen */
+  height: auto;
+  margin-right: 20px; /* Espacio entre la imagen y el centro */
+}
+
+.footer-info {
+  text-align: center;
+  flex: 1; /* Para que ocupe el espacio central */
+  font-size: 12px; /* Tamaño de fuente más pequeño */
+}
+
+.footer-info h3 {
+  margin-bottom: 10px;
+  font-size: 16px; /* Título más discreto */
+}
+
+.footer-info ul {
+  list-style: none;
   padding: 0;
 }
-footer {
-  margin-top: auto; /* Empuja el footer hacia abajo */
-  position: relative;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  background-color: rgba(255, 255, 255, 0.3); /* Fondo semi-transparente */
-  backdrop-filter: blur(10px); /* Desenfoque para el efecto de vidrio */
-  padding: 20px;
-  width: 100%;
-  box-sizing: border-box;
-  border: 1px solid rgba(255, 255, 255, 0.2); /* Un borde para mayor realismo */
+
+.footer-info li {
+  margin: 5px 0;
 }
-  .sociales {
-    margin-top: 20px;
-    display: flex;
-    justify-content: flex-end;
-    width: 100%;
-  }
-  
-  .redes {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    gap: 15px;
-  }
-  
-  .redes li {
-    list-style: none;
-  }
-  
-  .redes li a {
-    text-decoration: none;
-    font-size: 32px;
-    color: #333333; /* Dark charcoal gray */
-    transition: transform 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
-  }
-  
-  /* Colores específicos por red social */
-  
-  .redes li a.facebook:hover {
-    color: #ffffff; /* Light blue */
-    filter: drop-shadow(0 0 5px #00BFFF) 
-            drop-shadow(0 0 10px #00BFFF) 
-            drop-shadow(0 0 15px #00BFFF)
-            drop-shadow(0 0 20px #00BFFF);
-  }
-  
-  .redes li a.instagram:hover {
-    display: inline-block;
-    background-image: linear-gradient(135deg, #F58529, #DD2A7B, #8134AF, #515BD4); /* Instagram's gradient */
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
-    filter: drop-shadow(0 0 5px #fcbf8c) 
-            drop-shadow(0 0 10px #df7ea9) 
-            drop-shadow(0 0 15px #9563b3)
-            drop-shadow(0 0 20px #767ed4);
-  }
-  
-  .redes li a.github:hover {
-    color: #404040; /* Dark gray */
-    filter: drop-shadow(0 0 5px #808080) 
-            drop-shadow(0 0 10px #808080) 
-            drop-shadow(0 0 15px #808080)
-            drop-shadow(0 0 20px #808080);
-  }.redes li a.twitter:hover {
-    color: #ffffff; /* Light blue */
-    filter: drop-shadow(0 0 5px #00BFFF) 
-            drop-shadow(0 0 10px #00BFFF) 
-            drop-shadow(0 0 15px #00BFFF)
-            drop-shadow(0 0 20px #00BFFF); /* Neon effect */
-  }
-  
+
+.footer-info li a {
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-info li a:hover {
+  color: #292929; /* Cambia de color al pasar el ratón */
+}
+
+.sociales {
+  display: flex;
+  flex-direction: column; /* Coloca las redes sociales en columna */
+  align-items: flex-end; /* Alinea las redes sociales a la derecha */
+}
+
+.redes {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.redes li {
+  list-style: none;
+}
+
+.redes li a {
+  text-decoration: none;
+  font-size: 24px;
+  color: #6e6e6e;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+}
+
+.redes li a:hover {
+  transform: translateY(-3px);
+}
+
+/* Efectos hover para los iconos */
+.redes li a.facebook:hover {
+  color: #4e75c7;
+  filter: drop-shadow(0 0 5px #3b5998)
+          drop-shadow(0 0 10px #3b5998);
+}
+
+.redes li a.instagram:hover {
+  background-image: linear-gradient(135deg, #F58529, #DD2A7B, #8134AF, #515BD4);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 5px #F58529)
+          drop-shadow(0 0 10px #DD2A7B);
+}
+
+.redes li a.github:hover {
+  color: #333333;
+  filter: drop-shadow(0 0 5px #333333)
+          drop-shadow(0 0 10px #333333);
+}
+
+.redes li a.twitter:hover {
+  color: #1DA1F2;
+  filter: drop-shadow(0 0 5px #1DA1F2)
+          drop-shadow(0 0 10px #1DA1F2);
+}
+
+/* Texto del copyright centrado */
+.footer-copy {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 12px;  
+  width: 100%;
+}

@@ -7,6 +7,76 @@
     <title>Acerca de Nosotros</title>
     <!--La siguiente linea me permite importar iconos para el menu-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+         /* Contenedor principal */
+    .gallery-container {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-top: 20px;
+      transition: transform 0.3s ease;
+    }
+
+    .gallery-container:hover {
+      transform: scale(1.02);
+    }
+
+    /* Estilos de cada ítem en la galería */
+    .gallery-item {
+      background-color: white;
+      border: 3px solid #007acc;
+      border-radius: 15px;
+      padding: 20px;
+      width: 240px;
+      text-align: center;
+      box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+      transition: box-shadow 0.3s ease;
+    }
+
+    .gallery-item:hover {
+      box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.3);
+      transform: scale(1.05);
+    }
+
+    /* Imagen dentro del ítem */
+    .gallery-item img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      transition: transform 0.3s ease;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.1);
+    }
+
+    /* Descripción debajo de la imagen */
+    .gallery-item p {
+      margin-top: 10px;
+      font-size: 1em;
+      color: #666;
+    }
+
+/* Icono de documento */
+.document-icon {
+  font-size: 4em;
+  color: #007acc;
+  transition: transform 0.3s ease, color 0.3s ease;
+  margin-top: 10px;
+  }
+
+.document-icon:hover {
+  color: #005b99;
+  transform: scale(1.1);
+}
+
+/* Descripción debajo del icono */
+.gallery-item p {
+  margin-top: 10px;
+  font-size: 1em;
+  color: #666;
+}
+    </style>
     <link rel="stylesheet" href="info.css">
 </head>
 <body>
@@ -16,40 +86,34 @@
             <img src="img/logopagina.png" alt="OndaXplorer" class="">
             <h1>OndaXplorer</h1>
             <nav class="menu">
-                <ul>
-                    <li>
-                        <a href="inicio.html" class="icon-item">
-                            <i class="fas fa-home"></i>
-                            <span class="icon-text">Inicio</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="temas.html" class="icon-item">
-                            <i class="fas fa-book"></i>
-                            <span class="icon-text">Temas</span>
-                        </a>
-                    </li>
-                    
-                    <li>
-                        <a href="ejercicios.html" class="icon-item">
-                            <i class="fas fa-pencil-alt"></i>
-                            <span class="icon-text">Ejercicios</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="lab.html" class="icon-item">
-                            <i class="fas fa-flask"></i>
-                            <span class="icon-text">Laboratorio</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="info.html" class="icon-item">
-                            <i class="fas fa-info-circle"></i>
-                            <span class="icon-text">Acerca de nosotros</span>
-                        </a>
-                    </li>
-    
-                </ul>
+              <ul>
+                <li>
+                    <a href="temas.html" class="icon-item">
+                       <i class="fas fa-home"></i>
+                       <span class="icon-text">Inicio</span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="ejercicios.html" class="icon-item">
+                        <i class="fas fa-pencil-alt"></i>
+                        <span class="icon-text">Ejercicios</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="laboratorio.html" class="icon-item">
+                        <i class="fas fa-flask"></i>
+                        <span class="icon-text">Laboratorio</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="info.html" class="icon-item">
+                        <i class="fas fa-info-circle"></i>
+                        <span class="icon-text">Acerca de nosotros</span>
+                    </a>
+                </li>
+
+            </ul>
     
             </nav>
         </header>
@@ -68,52 +132,114 @@
             </form>     
             </div>
         </nav>
-        <!--Recuadro de texto bajo la barra de buscar-->
-        <div class="glass">
-            <div class="glass-effect">
-            <h1>Proximamente Información de OndaXplorer</h1>
-            <p>Libros, fórmulas, redes sociales y más.</p>
-        
+        <section id="about-ondaxplorer">
+          <div class="content-container">
+              <h1>Sobre OndaXplorer</h1>
+              <p>Bienvenidos a <strong>OndaXplorer</strong>, una plataforma diseñada para facilitar el aprendizaje de la física, con un enfoque en la mecánica clásica y las ondas. Aquí encontrarás ejercicios, experimentos de laboratorio virtual y recursos educativos diseñados para estudiantes de ingeniería y entusiastas de la ciencia.</p>
+      
+              <!-- Sección de imágenes del equipo -->
+              <div class="team-section">
+                  <div class="team-member">
+                      <img src="img/samuel.jpg" alt="Samuel Daza">
+                      <h3>Samuel Daza</h3>
+                  </div>
+                  <div class="team-member">
+                      <img src="img/jayber.jpg" alt="Jayber Castro">
+                      <h3>Jayber Castro</h3>
+                  </div>
+                  <div class="team-member">
+                      <img src="img/natalia.jpg" alt="Natalia Diaz">
+                      <h3>Natalia Diaz</h3>
+                  </div>
+                  <div class="team-member">
+                      <img src="img/Alejandra.jpg" alt="Maria Rubio">
+                      <h3>Maria Rubio</h3>
+                  </div>
+              </div>
+      
+              <h2>¿Quiénes Somos?</h2>
+              <p>Somos un equipo de estudiantes de tercer semestre de <strong>Ingeniería de Sistemas y Computación</strong> de la <a href="https://www.ucundinamarca.edu.co" target="_blank">Universidad de Cundinamarca</a>, en Fusagasugá. Nuestro objetivo es crear herramientas educativas que apoyen el aprendizaje de conceptos clave de física.</p>
+      
+              <h3>Propósito</h3>
+              <p>Este sitio web fue creado como parte de un proyecto académico, y nuestro principal interés es ofrecer una plataforma gratuita y accesible para estudiantes que deseen reforzar su comprensión en temas como la física mecánica y las ondas.</p>
+      
+              <h3>Logo y Documentos</h3>
+              <p class="description">El logotipo de <strong>OndaXplorer</strong> es un símbolo de nuestra dedicación y compromiso con la educación. Aquí puedes encontrar un documento detallado sobre el desarrollo y propósito de nuestra plataforma.</p>
+            
+              <div class="gallery-container">
+                <!-- Logo -->
+                <div class="gallery-item">
+                  <img src="img/logopagina.png" alt="Logo de OndaXplorer">
+                  <p>Logo de OndaXplorer</p>
+                </div>
+            
+                        <!-- Documento descargable con ícono -->
+            <div class="gallery-item">
+                <a href="img/Guion_producto_audiovisual.pdf" target="_blank" class="document-link">
+                <i class="fas fa-file-alt document-icon"></i> <!-- Ícono de documento -->
+                </a>
+                <p>Documento de OndaXplorer</p>
             </div>
-        </div>
-        </div>
+            </div>
+            <h3>Ubicación</h3>
+              <p>Puedes encontrarnos en el campus de Fusagasugá de la Universidad de Cundinamarca.</p>
+      
+              <!-- Mapa de Google -->
+              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31863.209740325695!2d-74.36833140259046!3d4.338594875896481!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3efaa9d6e9312d%3A0x8e524f13b150f4b6!2sUniversidad%20de%20Cundinamarca%20-%20Fusagasug%C3%A1!5e0!3m2!1ses!2sco!4v1697731446369!5m2!1ses!2sco" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+         
+              </div>
+               </div>
+
+      </section>
+      
         <!--FOOTER-->
         <!-- Redes sociales debajo del texto -->
-  <footer>
-    <div class="sociales">
-      <ul class="redes">
-        <!-- Facebook -->
-        <li>
-          <a href="https://www.facebook.com/share/LvQiRqq2j7ahfH8N/?mibextid=qi2Omg" target="_blank" class="facebook">
-            <i class="fab fa-facebook"></i>
-          </a>
-        </li>
-
-        <!-- Instagram -->
-        <li>
-          <a href="https://www.instagram.com/ondaxplorer?igsh=enNrM3UxZW9rN2o0" target="_blank" class="instagram">
-            <i class="fab fa-instagram"></i>
-          </a>
-        </li>
-
-        <!-- Threads -->
-        <li>
-          <a href="https://twitter.com/" target="_blank" class="twitter">
-              <i class="fab fa-twitter"></i> <!-- Usamos el ícono de Twitter -->
-            </a>
-        </li>
-
-        <!-- GitHub -->
-        <li>
-          <a href="https://github.com/tu-usuario" target="_blank" class="github">
-            <i class="fab fa-github"></i>
-          </a>
-        </li>
-      </ul>
-    </div>
+        <footer>
+          <div class="footer-content">
+              <img src="img/IMAGOTIPO VERTICAL NEGRO.png" alt="ucundinamarca">
+      
+              <div class="footer-info">
+                  <h3>Contacto</h3>
+                  <p>Si tienes alguna pregunta, no dudes en contactarnos a nuestros correos universitarios o a través de las redes sociales.</p>
+                  <ul>
+                      <li>Samuel Arturo Daza Criado - <a href="mailto:samuel.daza@ucundinamarca.edu.co">samuel.daza@ucundinamarca.edu.co</a></li>
+                      <li>Jayber Santiago Castro Parra - <a href="mailto:jayber.castro@ucundinamarca.edu.co">jayber.castro@ucundinamarca.edu.co</a></li>
+                      <li>Natalia Carolina Diaz Calderón - <a href="mailto:natalia.diaz@ucundinamarca.edu.co">natalia.diaz@ucundinamarca.edu.co</a></li>
+                      <li>Maria Alejandra Rubio Cárdenas - <a href="mailto:maria.rubio@ucundinamarca.edu.co">maria.rubio@ucundinamarca.edu.co</a></li>
+                  </ul>
+              </div>
+      
+              <div class="sociales">
+                  <ul class="redes">
+                      <li>
+                          <a href="https://www.facebook.com/share/LvQiRqq2j7ahfH8N/?mibextid=qi2Omg" target="_blank" class="facebook">
+                              <i class="fab fa-facebook"></i>
+                          </a>
+                      </li>
+                      <li>
+                          <a href="https://www.instagram.com/ondaxplorer?igsh=enNrM3UxZW9rN2o0" target="_blank" class="instagram">
+                              <i class="fab fa-instagram"></i>
+                          </a>
+                      </li>
+                      <li>
+                          <a href="https://twitter.com/" target="_blank" class="twitter">
+                              <i class="fab fa-twitter"></i>
+                          </a>
+                      </li>
+                      <li>
+                          <a href="https://github.com/tu-usuario" target="_blank" class="github">
+                              <i class="fab fa-github"></i>
+                          </a>
+                      </li>
+                  </ul>
+              </div>
+          </div>
+      
+          <p class="footer-copy">&copy; 2024 OndaXplorer - Todos los derechos reservados.</p>
+      </footer>
+      
+      
   </div>
-</div>
-</footer>
 <script src="codigo.js"></script>
 </body>
 </html>

@@ -51,3 +51,53 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
+//BACKEND
+
+document.addEventListener("DOMContentLoaded", () => {
+  // Formulario de registro
+  document.querySelector(".card-register form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const nombre = e.target.querySelector("input[name='nombre']").value;
+      const correo = e.target.querySelector("input[name='correo']").value;
+      const contrasena = e.target.querySelector("input[name='contrasena']").value;
+
+      try {
+          const response = await fetch('/register', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ nombre, correo, contrasena })
+          });
+          
+          const message = await response.text();
+          alert(message);
+      } catch (error) {
+          console.error("Error en el registro:", error);
+      }
+  });
+
+  // Formulario de inicio de sesión
+  document.querySelector(".card-login form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const correo = e.target.querySelector("input[name='correo']").value;
+      const contrasena = e.target.querySelector("input[name='contrasena']").value;
+
+      try {
+          const response = await fetch('/login', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ correo, contrasena })
+          });
+
+          const message = await response.text();
+          if (response.ok) {
+              alert("Inicio de sesión exitoso");
+          } else {
+              alert(message);
+          }
+      } catch (error) {
+          console.error("Error en el inicio de sesión:", error);
+      }
+  });
+});

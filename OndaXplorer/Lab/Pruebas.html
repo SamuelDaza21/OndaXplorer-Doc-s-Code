@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animación de Leyes de Newton</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #F0F0F0; /* Fondo gris claro */
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+            height: 100vh;
+            overflow: hidden; /* Evitar scroll */
+        }
+
+        #container {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.95); /* Fondo blanco semitransparente */
+            backdrop-filter: blur(10px); /* Efecto de vidrio */
+            border-radius: 15px; /* Bordes redondeados */
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); /* Sombra más suave */
+            max-width: 240px; /* Ancho máximo ajustado */
+            display: flex; /* Usamos flexbox */
+            align-items: center; /* Alineamos verticalmente */
+            transition: transform 0.3s ease; /* Suave animación al hover */
+        }
+
+        #container:hover {
+            transform: scale(1.05); /* Efecto de hover */
+        }
+
+        h1 {
+            font-size: 56px; /* Tamaño más grande para "Ley" */
+            margin: 0;
+            color: #007BFF; /* Color azul vibrante para el título */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); /* Sombra de texto suave */
+            display: inline-block; /* Para permitir que el siguiente texto esté al lado */
+        }
+
+        .sub-title {
+            font-size: 24px; /* Tamaño más pequeño para las leyes */
+            margin: 0 0 0 15px; /* Margen izquierdo para separar del título */
+            opacity: 0; /* Ocultar por defecto */
+            transform: translateY(20px); /* Comienza desplazado hacia abajo */
+            animation: slideIn 1s forwards; /* Animación de entrada */
+            color: #007BFF; /* Color azul vibrante para el subtítulo */
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.05); /* Sombra de texto suave */
+            transition: opacity 0.5s ease; /* Transición suave para la opacidad */
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px); /* Mueve hacia arriba */
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateY(-20px); /* Mueve hacia arriba al salir */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1 id="main-title">Ley</h1>
+        <span id="subtitle" class="sub-title">de Inercia</span>
+    </div>
+
+    <script>
+        const laws = [
+            "de Inercia",
+            "de Fuerza",
+            "de Acción y Reacción"
+        ];
+
+        let currentLaw = 0;
+
+        function updateLaw() {
+            const subtitle = document.getElementById('subtitle');
+
+            // Aplicar animación de salida al subtítulo
+            subtitle.style.animation = 'slideOut 1s forwards';
+
+            // Cambiar la ley después de que la animación de salida termine
+            setTimeout(() => {
+                // Cambiar el texto de la ley
+                currentLaw = (currentLaw + 1) % laws.length; // Ciclo a la siguiente ley
+                subtitle.textContent = laws[currentLaw];
+
+                // Aplicar animación de entrada al nuevo subtítulo
+                subtitle.style.animation = 'slideIn 1s forwards';
+            }, 1000); // Tiempo de espera para la animación de salida
+        }
+
+        // Cambiar de ley cada 4 segundos (3 segundos de visualización + 1 segundo de animación)
+        setInterval(updateLaw, 4000);
+        updateLaw(); // Inicializar la primera ley
+    </script>
+</body>
+</html>

@@ -158,11 +158,14 @@ const questions = [
         help: "Para convertir de centímetros a metros, divide por 100."
     },
     {
-        question: "Si un líquido ocupa un volumen de 2500 mL, ¿cuál es su volumen en litros?",
-        options: ["2.5 L", "0.25 L", "25 L", "250 L"],
-        correct: 0,
-        feedback: "2500 mL equivalen a 2.5 L (1 L = 1000 mL).",
-        help: "Para convertir de mililitros a litros, divide por 1000."
+        question: "Cual de estas es una ventaja que ofrece el Sistema Internacional de Unidades",
+        options: ["Facilita el intercambio de información en ciencia, tecnología y comercio.",
+             "Su estructura decimal hace que sea fácil convertir entre unidades.",
+              "Todas las unidades derivadas se construyen de manera lógica a partir de las unidades básicas.", 
+              "Todas las anteriores"],
+        correct: 3,
+        feedback: "Estas 3 son ventajas que puede ofrecer el Sistema Internacional de Unidades, desde los campos en que se emplean y su facil uso y estructura",
+        help: "puede ser usado en cualquier area, con un buen manejo y equivalencia, permite dar mas unidades de medida"
     },
     {
         question: "¿Cuánto es 1 kg de fuerza en Newtons?",

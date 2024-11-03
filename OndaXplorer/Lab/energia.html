@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulación de Tiro Parabólico y Calculadora de Energías</title>
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-image: url(img/f1.jpg); /* Light gray background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 20px;
+            margin: 0;
+            color: #333;
+        }
+
+        /* Contenedor principal */
+        #lab-container, #calc-container {
+            width: 80%;
+            max-width: 800px;
+            border: 2px solid #007BFF;
+            border-radius: 10px;
+            background-color: white;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        canvas {
+            width: 100%;
+            height: auto;
+            background-color: #fff;
+            border: 2px solid #28a745;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            display: block;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+
+        .inputs-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .input-group {
+            flex: 1;
+            min-width: 150px;
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 10px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #007BFF;
+        }
+
+        input[type="number"] {
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #007BFF;
+            border-radius: 5px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        input[type="number"]:focus {
+            border-color: #0056b3;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 86, 179, 0.5);
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+            transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .formula {
+            background-color: #e7f1ff;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+            font-size: 16px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- Simulación de Tiro Parabólico -->
+    <div id="lab-container">
+        <h2>Simulación de Tiro Parabólico - Energías</h2>
+        <canvas id="simulationCanvas" width="600" height="300"></canvas>
+
+        <div class="inputs-container">
+            <div class="input-group">
+                <label for="velocity">Velocidad inicial (m/s):</label>
+                <input type="number" id="velocity" min="1" max="100" value="20">
+            </div>
+            <div class="input-group">
+                <label for="angle">Ángulo de lanzamiento (°):</label>
+                <input type="number" id="angle" min="1" max="90" value="45">
+            </div>
+            <div class="input-group">
+                <label for="mass">Masa del proyectil (kg):</label>
+                <input type="number" id="mass" min="0.1" max="10" value="1">
+            </div>
+            <div class="input-group">
+                <label for="gravity">Gravedad (m/s²):</label>
+                <input type="number" id="gravity" min="0.1" max="50" value="9.81">
+            </div>
+        </div>
+
+        <button onclick="launchProjectile()">Lanzar proyectil</button>
+
+        <div class="formula-container">
+            <div class="formula">
+                <strong>Energía Potencial (Ep):</strong> <span id="potentialEnergy">0</span> J
+            </div>
+            <div class="formula">
+                <strong>Energía Cinética (Ec):</strong> <span id="kineticEnergy">0</span> J
+            </div>
+            <div class="formula">
+                <strong>Energía Total (Et):</strong> <span id="totalEnergy">0</span> J
+            </div>
+        </div>
+    </div>
+
+   
+      <!-- Calculadora de Energías con Incógnitas -->
+    <div id="calc-container">
+        <h2>Calculadora de Energías</h2>
+        <div class="inputs-container">
+            <div class="input-group">
+                <label for="mass">Masa (kg):</label>
+                <input type="number" id="mass" placeholder="Dejar vacío si es incógnita">
+            </div>
+            <div class="input-group">
+                <label for="height">Altura (m):</label>
+                <input type="number" id="height" placeholder="Dejar vacío si es incógnita">
+            </div>
+            <div class="input-group">
+                <label for="velocity">Velocidad (m/s):</label>
+                <input type="number" id="velocity" placeholder="Dejar vacío si es incógnita">
+            </div>
+            <div class="input-group">
+                <label for="gravity">Gravedad (m/s²):</label>
+                <input type="number" id="gravity" value="9.81">
+            </div>
+            <div class="input-group">
+                <label for="potentialEnergy">Energía Potencial (J):</label>
+                <input type="number" id="potentialEnergy" placeholder="Dejar vacío si es incógnita">
+            </div>
+            <div class="input-group">
+                <label for="kineticEnergy">Energía Cinética (J):</label>
+                <input type="number" id="kineticEnergy" placeholder="Dejar vacío si es incógnita">
+            </div>
+            <div class="input-group">
+                <label for="totalEnergy">Energía Total (J):</label>
+                <input type="number" id="totalEnergy" placeholder="Dejar vacío si es incógnita">
+            </div>
+        </div>
+
+        <button onclick="solveUnknowns()">Resolver Incógnitas</button>
+
+        <div class="formula-container">
+            <div class="formula">
+                <strong>Masa (m):</strong> <span id="resultMass">N/A</span> kg
+            </div>
+            <div class="formula">
+                <strong>Altura (h):</strong> <span id="resultHeight">N/A</span> m
+            </div>
+            <div class="formula">
+                <strong>Velocidad (v):</strong> <span id="resultVelocity">N/A</span> m/s
+            </div>
+            <div class="formula">
+                <strong>Energía Potencial (Ep):</strong> <span id="resultPotentialEnergy">N/A</span> J
+            </div>
+            <div class="formula">
+                <strong>Energía Cinética (Ec):</strong> <span id="resultKineticEnergy">N/A</span> J
+            </div>
+            <div class="formula">
+                <strong>Energía Total (Et):</strong> <span id="resultTotalEnergy">N/A</span> J
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simulación de tiro parabólico
+        const canvas = document.getElementById('simulationCanvas');
+        const ctx = canvas.getContext('2d');
+        let velocity, angle, mass, g;
+
+        function initializeCanvas() {
+            ctx.fillStyle = '#87CEFA'; 
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#28a745'; 
+            ctx.fillRect(0, canvas.height - 20, canvas.width, 20); 
+        }
+
+        function launchProjectile() {
+            velocity = parseFloat(document.getElementById('velocity').value);
+            angle = parseFloat(document.getElementById('angle').value) * (Math.PI / 180); 
+            mass = parseFloat(document.getElementById('mass').value);
+            g = parseFloat(document.getElementById('gravity').value);
+
+            const velocityX = velocity * Math.cos(angle);
+            const velocityY = velocity * Math.sin(angle);
+
+            const initialHeight = 0;
+            const totalEnergy = calculateTotalEnergy(velocity, mass, initialHeight);
+
+            simulateProjectile(velocityX, velocityY, mass, totalEnergy);
+        }
+
+        function calculateTotalEnergy(velocity, mass, height) {
+            const kineticEnergy = 0.5 * mass * Math.pow(velocity, 2);
+            const potentialEnergy = mass * g * height;
+            const totalEnergy = kineticEnergy + potentialEnergy;
+            return { kineticEnergy, potentialEnergy, totalEnergy };
+        }
+
+        function simulateProjectile(velocityX, velocityY, mass, energyData) {
+            let time = 0;
+            const deltaTime = 0.05;
+            const height = canvas.height - 20; 
+            const objectSize = 10; 
+            let posX = 30; 
+            let posY = height - objectSize; 
+
+            const restitutionCoefficient = 0.8; 
+
+            function draw() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                initializeCanvas(); 
+
+                posX += velocityX * deltaTime * 10; 
+                posY -= (velocityY * deltaTime * 10) - (0.5 * g * Math.pow(time, 2)); 
+
+                if (posY >= height - objectSize) {
+                    posY = height - objectSize;
+                    velocityY = -restitutionCoefficient * Math.abs(velocityY); 
+                    velocityY *= 0.8; 
+                }
+
+                if (posX <= objectSize) {
+                    posX = objectSize;
+                    velocityX = -restitutionCoefficient * Math.abs(velocityX); 
+                } else if (posX >= canvas.width - objectSize) {
+                    posX = canvas.width - objectSize; 
+                    velocityX = -restitutionCoefficient * Math.abs(velocityX); 
+                }
+
+                ctx.fillStyle = '#007bff';
+                ctx.beginPath();
+                ctx.arc(posX, posY, objectSize, 0, 2 * Math.PI);
+                ctx.fill();
+
+                const heightCurrent = height - posY - objectSize > 0 ? height - posY - objectSize : 0;
+                const { kineticEnergy, potentialEnergy, totalEnergy } = calculateTotalEnergy(
+                    Math.sqrt(Math.pow(velocityX, 2) + Math.pow(velocityY, 2)),
+                    mass,
+                    heightCurrent
+                );
+
+                document.getElementById('potentialEnergy').innerText = potentialEnergy.toFixed(2);
+                document.getElementById('kineticEnergy').innerText = kineticEnergy.toFixed(2);
+                document.getElementById('totalEnergy').innerText = totalEnergy.toFixed(2);
+
+                time += deltaTime;
+                requestAnimationFrame(draw);
+            }
+
+            draw();
+        }
+
+        window.onload = initializeCanvas;
+
+        // Calculadora de Energías
+        function calculateEnergies() {
+            const mass = parseFloat(document.getElementById('calcMass').value);
+            const height = parseFloat(document.getElementById('calcHeight').value);
+            const velocity = parseFloat(document.getElementById('calcVelocity').value);
+            const gravity = parseFloat(document.getElementById('calcGravity').value);
+
+            const potentialEnergy = mass * gravity * height;
+            const kineticEnergy = 0.5 * mass * Math.pow(velocity, 2);
+            const totalEnergy = potentialEnergy + kineticEnergy;
+
+            document.getElementById('calcPotentialEnergy').innerText = potentialEnergy.toFixed(2);
+            document.getElementById('calcKineticEnergy').innerText = kineticEnergy.toFixed(2);
+            document.getElementById('calcTotalEnergy').innerText = totalEnergy.toFixed(2);
+        }
+        //calculadora
+        function solveUnknowns() {
+            let mass = parseFloat(document.getElementById('mass').value);
+            let height = parseFloat(document.getElementById('height').value);
+            let velocity = parseFloat(document.getElementById('velocity').value);
+            let gravity = parseFloat(document.getElementById('gravity').value);
+            let potentialEnergy = parseFloat(document.getElementById('potentialEnergy').value);
+            let kineticEnergy = parseFloat(document.getElementById('kineticEnergy').value);
+            let totalEnergy = parseFloat(document.getElementById('totalEnergy').value);
+
+            // Resolver energía potencial si falta
+            if (!potentialEnergy && mass && height) {
+                potentialEnergy = mass * gravity * height;
+            } else if (!height && potentialEnergy && mass) {
+                // Resolver altura si falta
+                height = potentialEnergy / (mass * gravity);
+            }
+
+            // Resolver energía cinética si falta
+            if (!kineticEnergy && mass && velocity) {
+                kineticEnergy = 0.5 * mass * Math.pow(velocity, 2);
+            } else if (!velocity && kineticEnergy && mass) {
+                // Resolver velocidad si falta
+                velocity = Math.sqrt((2 * kineticEnergy) / mass);
+            }
+
+            // Resolver masa si falta
+            if (!mass && potentialEnergy && height) {
+                mass = potentialEnergy / (gravity * height);
+            } else if (!mass && kineticEnergy && velocity) {
+                mass = (2 * kineticEnergy) / Math.pow(velocity, 2);
+            }
+
+            // Resolver energía total si falta
+            if (!totalEnergy && potentialEnergy && kineticEnergy) {
+                totalEnergy = potentialEnergy + kineticEnergy;
+            } else if (!kineticEnergy && totalEnergy && potentialEnergy) {
+                kineticEnergy = totalEnergy - potentialEnergy;
+            } else if (!potentialEnergy && totalEnergy && kineticEnergy) {
+                potentialEnergy = totalEnergy - kineticEnergy;
+            }
+
+            // Actualizar resultados
+            document.getElementById('resultMass').innerText = mass ? mass.toFixed(2) : "N/A";
+            document.getElementById('resultHeight').innerText = height ? height.toFixed(2) : "N/A";
+            document.getElementById('resultVelocity').innerText = velocity ? velocity.toFixed(2) : "N/A";
+            document.getElementById('resultPotentialEnergy').innerText = potentialEnergy ? potentialEnergy.toFixed(2) : "N/A";
+            document.getElementById('resultKineticEnergy').innerText = kineticEnergy ? kineticEnergy.toFixed(2) : "N/A";
+            document.getElementById('resultTotalEnergy').innerText = totalEnergy ? totalEnergy.toFixed(2) : "N/A";
+        }
+    </script>
+
+</body>
+</html>
