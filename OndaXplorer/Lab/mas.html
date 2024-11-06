@@ -158,7 +158,7 @@
 
     <div class="buttons">
         <button id="startButton">Iniciar</button>
-        <button id="resetButton">Reiniciar</button>
+        <button id="resetButton">Ajustar</button>
     </div>
 
     <div class="simulation">
@@ -238,12 +238,15 @@
       position = initialAmplitude * Math.exp(-dampingFactor * time) * Math.cos(dampedFrequency * time);
       velocity = -initialAmplitude * dampedFrequency * Math.exp(-dampingFactor * time) * Math.sin(dampedFrequency * time);
 
-      // Actualizar la masa (bola roja)
-      const normalizedPosition = 100 + position * 100; // ajustar la escala de la posición
-      massDisplay.style.bottom = `${normalizedPosition}px`;
+      // Escalar y normalizar la posición
+    const normalizedPosition = 100 + position * 100;
 
-      // Actualizar el resorte
-      springPath.setAttribute('d', generateSpringPath(normalizedPosition));
+// Generar el camino del resorte y obtener la última posición Y
+const { path, lastY } = generateSpringPath(normalizedPosition);
+springPath.setAttribute('d', path);
+
+// Actualizar la posición de la masa
+massDisplay.style.bottom = `${lastY}px`;
 
       // Actualizar los datos
       positionDisplay.textContent = position.toFixed(2);
@@ -256,12 +259,16 @@
       const segments = 7;
       const amplitude = 20;
       let path = `M50 0 `;
+      let lastY = 0;
+
       for (let i = 0; i <= segments; i++) {
         const y = (position / segments) * i;
         const x = i % 2 === 0 ? 50 - amplitude : 50 + amplitude;
         path += `L${x} ${y} `;
+        lastY = y;
       }
-      return path;
+
+      return { path, lastY };
     }
 
     // Animación del sistema

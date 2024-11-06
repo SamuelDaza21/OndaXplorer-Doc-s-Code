@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="img/logopagina.png" type="image">
-    <title>Sistema Internacional de Unidades</title>
+    <title>Espejos</title>
     <!--La siguiente linea me permite importar iconos para el menu-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -571,7 +571,7 @@ footer {
         </div>
         <!--EJERCICIOS O CUESTIONARIO-->
         <div class="container">
-            <h1>Sistema Internacional de Unidades</h1>
+            <h1>Refraxión, Refleccion y Espejos</h1>
             <div id="quiz"></div>
             <div id="result"></div>
             <button id="next" style="display: none;">Siguiente</button>
@@ -621,189 +621,227 @@ footer {
 
     <p class="footer-copy">&copy; 2024 OndaXplorer - Todos los derechos reservados.</p>
 </footer>
-<script>
-    const questions = [
-    // Preguntas de selección múltiple
+
+    <script >
+        const questions = [
+    // Preguntas teóricas
     {
-        question: "¿Cuáles son las magnitudes fundamentales en el Sistema Internacional de Unidades (SI)?",
+        question: "¿Qué es la reflexión de la luz?",
         options: [
-            "Longitud, masa, tiempo, temperatura, corriente eléctrica, cantidad de sustancia, intensidad luminosa.",
-            "Longitud, volumen, masa, temperatura, velocidad, presión, energía.",
-            "Longitud, masa, tiempo, fuerza, energía, temperatura, volumen.",
-            "Longitud, masa, tiempo, volumen, intensidad luminosa, presión, cantidad de sustancia."
-        ],
-        correct: 0,
-        feedback: "Las magnitudes fundamentales en el SI son longitud, masa, tiempo, temperatura, corriente eléctrica, cantidad de sustancia e intensidad luminosa.",
-        help: "Estas magnitudes son independientes y no se pueden derivar unas de otras."
-    },
-    {
-        question: "¿Cuál es la unidad de medida de la longitud en el Sistema Internacional de Unidades (SI)?",
-        options: [
-            "Metro (m)",
-            "Kilómetro (km)",
-            "Centímetro (cm)",
-            "Milímetro (mm)"
-        ],
-        correct: 0,
-        feedback: "La unidad básica de longitud en el SI es el metro (m).",
-        help: "El metro es la distancia que recorre la luz en el vacío en un intervalo de tiempo específico."
-    },
-    {
-        question: "¿Qué representa la magnitud 'masa' en el contexto del Sistema Internacional de Unidades (SI)?",
-        options: [
-            "La cantidad de espacio que ocupa un objeto.",
-            "La cantidad de materia en un objeto.",
-            "La fuerza ejercida por un objeto en movimiento.",
-            "La energía total de un objeto."
+            "El cambio de dirección de la luz al entrar en un nuevo medio.",
+            "El cambio de dirección de la luz al chocar con una superficie.",
+            "La absorción de la luz por un material.",
+            "La dispersión de la luz en diferentes direcciones."
         ],
         correct: 1,
-        feedback: "La masa es la cantidad de materia en un objeto, medida en kilogramos (kg).",
-        help: "No debe confundirse con el peso, que es la fuerza gravitacional que actúa sobre la masa."
+        feedback: "La reflexión es el cambio de dirección que experimenta la luz al chocar con una superficie.",
+        help: "Este fenómeno sigue la Ley de Reflexión."
     },
     {
-        question: "¿Cuál es la unidad de medida de la temperatura en el Sistema Internacional de Unidades (SI)?",
+        question: "¿Cuál es la Ley de Reflexión?",
         options: [
-            "Grado Celsius (°C)",
-            "Kelvin (K)",
-            "Grado Fahrenheit (°F)",
-            "Joule (J)"
+            "El ángulo de incidencia es igual al ángulo de refracción.",
+            "El ángulo de incidencia es igual al ángulo de reflexión.",
+            "El ángulo de incidencia es mayor que el ángulo de reflexión.",
+            "La luz siempre se refleja a 90 grados."
         ],
         correct: 1,
-        feedback: "La unidad básica de temperatura en el SI es el Kelvin (K).",
-        help: "El Kelvin es una escala termodinámica que comienza en el cero absoluto."
+        feedback: "La Ley de Reflexión establece que el ángulo de incidencia es igual al ángulo de reflexión.",
+        help: "Se mide con respecto a la normal a la superficie."
     },
     {
-        question: "¿Qué magnitud fundamental se mide en amperios (A)?",
+        question: "¿Qué es la refracción de la luz?",
         options: [
-            "Corriente eléctrica",
-            "Intensidad luminosa",
-            "Cantidad de sustancia",
-            "Masa"
+            "El cambio de dirección de la luz al cambiar de medio.",
+            "La absorción de la luz por un material.",
+            "La reflexión de la luz en una superficie plana.",
+            "La dispersión de la luz en diferentes colores."
         ],
         correct: 0,
-        feedback: "El amperio (A) es la unidad de medida de la corriente eléctrica.",
-        help: "La corriente eléctrica es el flujo de carga eléctrica en un circuito."
+        feedback: "La refracción es el cambio de dirección que experimenta la luz al pasar de un medio a otro.",
+        help: "La luz se desacelera o acelera al cambiar de medio."
     },
     {
-        question: "¿Cuál es la unidad de medida de la intensidad luminosa en el Sistema Internacional de Unidades (SI)?",
+        question: "¿Qué determina el índice de refracción de un medio?",
         options: [
-            "Lumen (lm)",
-            "Candela (cd)",
-            "Lux (lx)",
-            "Watt (W)"
+            "La velocidad de la luz en el vacío.",
+            "La cantidad de luz reflejada.",
+            "La longitud de onda de la luz.",
+            "La temperatura del medio."
+        ],
+        correct: 0,
+        feedback: "El índice de refracción de un medio se define como la relación entre la velocidad de la luz en el vacío y la velocidad de la luz en el medio.",
+        help: "Se representa como n = c/v, donde c es la velocidad de la luz en el vacío."
+    },
+    {
+        question: "Si la luz pasa de un medio menos denso a uno más denso, ¿qué sucede con su velocidad y dirección?",
+        options: [
+            "Aumenta y se aleja de la normal.",
+            "Disminuye y se acerca a la normal.",
+            "Aumenta y se acerca a la normal.",
+            "Disminuye y se aleja de la normal."
         ],
         correct: 1,
-        feedback: "La unidad de medida de la intensidad luminosa en el SI es la candela (cd).",
-        help: "La candela mide la cantidad de luz emitida por una fuente en una dirección específica."
+        feedback: "La luz disminuye su velocidad y se acerca a la normal al pasar a un medio más denso.",
+        help: "Este fenómeno se observa en la refracción."
     },
     {
-        question: "La magnitud 'cantidad de sustancia' se mide en:",
+        question: "¿Qué tipo de espejo es curvo y refleja la luz hacia un foco?",
         options: [
-            "Moles (mol)",
-            "Gramos (g)",
-            "Kilogramos (kg)",
-            "Litros (L)"
+            "Espejo plano",
+            "Espejo cóncavo",
+            "Espejo convexo",
+            "Espejo difuso"
+        ],
+        correct: 1,
+        feedback: "El espejo cóncavo refleja la luz hacia un foco, concentrando los rayos de luz.",
+        help: "Se utiliza en aplicaciones como reflectores y telescopios."
+    },
+    {
+        question: "¿Qué es la imagen virtual en un espejo convexo?",
+        options: [
+            "Una imagen que se forma en el mismo lado que el objeto.",
+            "Una imagen que se puede proyectar en una pantalla.",
+            "Una imagen que se forma en el lado opuesto al objeto.",
+            "Una imagen que no se puede ver."
         ],
         correct: 0,
-        feedback: "La cantidad de sustancia se mide en moles (mol) en el Sistema Internacional.",
-        help: "Un mol es la cantidad de sustancia que contiene tantas entidades elementales como átomos hay en 12 g de carbono-12."
+        feedback: "La imagen virtual en un espejo convexo se forma del mismo lado que el objeto y no puede ser proyectada.",
+        help: "Las imágenes virtuales son siempre más pequeñas que el objeto real."
     },
     {
-        question: "¿Qué magnitud se relaciona con la cantidad de energía en el Sistema Internacional de Unidades (SI)?",
+        question: "En la refracción, ¿qué ocurre con la luz cuando entra en un medio menos denso?",
         options: [
-            "Joule (J)",
-            "Newton (N)",
-            "Pascal (Pa)",
-            "Watts (W)"
+            "Se desacelera y se aleja de la normal.",
+            "Se acelera y se aleja de la normal.",
+            "Se desacelera y se acerca a la normal.",
+            "No ocurre ningún cambio."
         ],
-        correct: 0,
-        feedback: "La unidad de medida de la energía en el SI es el Joule (J).",
-        help: "Un Joule es el trabajo realizado cuando se aplica una fuerza de un Newton a lo largo de un metro."
+        correct: 1,
+        feedback: "La luz se acelera y se aleja de la normal al entrar en un medio menos denso.",
+        help: "Este fenómeno se observa en la transición de agua a aire."
     },
     {
-        question: "¿Cuál de las siguientes es una magnitud derivada en el Sistema Internacional de Unidades (SI)?",
+        question: "¿Qué es el foco en el contexto de los espejos cóncavos?",
         options: [
-            "Masa",
-            "Longitud",
-            "Aceleración",
-            "Temperatura"
+            "El punto donde la luz se dispersa.",
+            "El punto donde se cruzan los rayos reflejados.",
+            "El punto donde se encuentran los rayos incidentes.",
+            "El punto donde se produce la imagen virtual."
         ],
-        correct: 2,
-        feedback: "La aceleración es una magnitud derivada, medida en metros por segundo al cuadrado (m/s²).",
-        help: "Las magnitudes derivadas se obtienen a partir de las magnitudes fundamentales."
+        correct: 1,
+        feedback: "El foco es el punto donde se cruzan los rayos reflejados en un espejo cóncavo.",
+        help: "Es fundamental para el diseño óptico de instrumentos."
     },
     {
-        question: "¿Qué unidad se utiliza para medir la presión en el Sistema Internacional de Unidades (SI)?",
+        question: "La cantidad de luz reflejada en una superficie depende de:",
         options: [
-            "Pascal (Pa)",
-            "Bar (bar)",
-            "Atmosfera (atm)",
-            "Newton por metro cuadrado (N/m²)"
+            "El color de la luz.",
+            "La rugosidad de la superficie.",
+            "La temperatura del medio.",
+            "La longitud de onda de la luz."
         ],
-        correct: 0,
-        feedback: "La unidad de medida de la presión en el SI es el Pascal (Pa).",
-        help: "Un Pascal es equivalente a un Newton por metro cuadrado."
+        correct: 1,
+        feedback: "La cantidad de luz reflejada depende de la rugosidad y características de la superficie.",
+        help: "Superficies más lisas reflejan más luz."
     },
 
-    // Preguntas de ejercicios
+    // Ejercicios prácticos
     {
-        question: "Si un objeto tiene una masa de 5 kg y se encuentra en un campo gravitacional donde g = 9.81 m/s², ¿cuál es su peso?",
-        options: ["49.05 N", "5 N", "9.81 N", "50 N"],
-        correct: 0,
-        feedback: "El peso se calcula como W = mg = 5 kg * 9.81 m/s² = 49.05 N.",
-        help: "El peso es la fuerza de gravedad que actúa sobre un objeto."
-    },
-    {
-        question: "Un objeto se mueve a una velocidad de 10 m/s y tiene una masa de 2 kg. ¿Cuál es su energía cinética?",
-        options: ["10 J", "20 J", "100 J", "50 J"],
+        question: "Un rayo de luz incide sobre un espejo plano con un ángulo de incidencia de 30 grados. ¿Cuál es el ángulo de reflexión?",
+        options: ["15 grados", "30 grados", "45 grados", "60 grados"],
         correct: 1,
-        feedback: "La energía cinética se calcula como E_k = 1/2 mv² = 1/2 * 2 kg * (10 m/s)² = 100 J.",
-        help: "La energía cinética depende de la masa y la velocidad del objeto."
+        feedback: "Según la Ley de Reflexión, el ángulo de reflexión es igual al ángulo de incidencia: 30 grados.",
+        help: "Recuerda que ambos ángulos se miden respecto a la normal."
     },
     {
-        question: "Si tienes 3 moles de un gas, ¿cuántas partículas hay en total? (Usa el número de Avogadro, NA ≈ 6.022 x 10²³)",
-        options: ["1.81 x 10²³", "6.022 x 10²³", "1.81 x 10²⁴", "1.00 x 10²³"],
-        correct: 2,
-        feedback: "La cantidad total de partículas es N = n * NA = 3 moles * 6.022 x 10²³ partículas/mol = 1.81 x 10²⁴ partículas.",
-        help: "El número de Avogadro permite convertir moles a partículas."
+        question: "La luz pasa del aire (n = 1) al agua (n = 1.33). Si el ángulo de incidencia es de 45 grados, ¿cuál es el ángulo de refracción?",
+        options: ["32 grados", "38 grados", "45 grados", "60 grados"],
+        correct: 1,
+        feedback: "Usando la ley de Snell: n1 * sin(θ1) = n2 * sin(θ2). Calculando se obtiene θ2 ≈ 32 grados.",
+        help: "Asegúrate de aplicar correctamente la ley de Snell."
     },
     {
-        question: "¿Cuál es la presión ejercida por una fuerza de 100 N sobre un área de 2 m²?",
-        options: ["50 Pa", "200 Pa", "100 Pa", "400 Pa"],
-        correct: 0,
-        feedback: "La presión se calcula como P = F/A = 100 N / 2 m² = 50 Pa.",
-        help: "La presión es la fuerza dividida por el área sobre la cual se ejerce."
+        question: "Un espejo cóncavo tiene un radio de curvatura de 40 cm. ¿Cuál es la distancia focal?",
+        options: ["10 cm", "20 cm", "30 cm", "40 cm"],
+        correct: 1,
+        feedback: "La distancia focal (f) de un espejo cóncavo es la mitad del radio de curvatura: f = R/2 = 40 cm / 2 = 20 cm.",
+        help: "Recuerda que la distancia focal es positiva para espejos cóncavos."
     },
     {
-        question: "Un cuerpo tiene una longitud de 200 cm. ¿Cuál es su longitud en metros?",
-        options: ["2 m", "0.2 m", "20 m", "0.02 m"],
-        correct: 0,
-        feedback: "200 cm equivalen a 2 m (1 m = 100 cm).",
-        help: "Para convertir de centímetros a metros, divide por 100."
-    },
-    {
-        question: "Cual de estas es una ventaja que ofrece el Sistema Internacional de Unidades",
-        options: ["Facilita el intercambio de información en ciencia, tecnología y comercio.",
-             "Su estructura decimal hace que sea fácil convertir entre unidades.",
-              "Todas las unidades derivadas se construyen de manera lógica a partir de las unidades básicas.", 
-              "Todas las anteriores"],
+        question: "Un objeto se encuentra a 30 cm de un espejo convexo con una distancia focal de -15 cm. ¿A qué distancia se formará la imagen?",
+        options: ["10 cm", "15 cm", "20 cm", "25 cm"],
         correct: 3,
-        feedback: "Estas 3 son ventajas que puede ofrecer el Sistema Internacional de Unidades, desde los campos en que se emplean y su facil uso y estructura",
-        help: "puede ser usado en cualquier area, con un buen manejo y equivalencia, permite dar mas unidades de medida"
+        feedback: "Usando la fórmula del espejo: 1/f = 1/do + 1/di, obtenemos di = 10 cm (virtual).",
+        help: "Recuerda que la imagen en espejos convexos es virtual y se forma detrás del espejo."
     },
     {
-        question: "¿Cuánto es 1 kg de fuerza en Newtons?",
-        options: ["9.81 N", "1 N", "10 N", "100 N"],
-        correct: 0,
-        feedback: "1 kg de fuerza es equivalente a 9.81 N en la Tierra.",
-        help: "La fuerza se calcula como el peso, que es la masa por la gravedad (W = mg)."
+        question: "Un rayo de luz viaja en un medio con un índice de refracción de 1.5 y llega a un medio con un índice de 1.2. Si el ángulo de incidencia es de 30 grados, ¿cuál será el ángulo de refracción?",
+        options: ["22 grados", "32 grados", "42 grados", "52 grados"],
+        correct: 1,
+        feedback: "Usando la ley de Snell: n1 * sin(θ1) = n2 * sin(θ2), el ángulo de refracción es de aproximadamente 22 grados.",
+        help: "No olvides utilizar las funciones trigonométricas para encontrar el resultado."
     },
     {
-        question: "Si un objeto tiene una masa de 10 kg y se acelera a 2 m/s², ¿cuál es la fuerza aplicada?",
-        options: ["20 N", "10 N", "5 N", "30 N"],
+        question: "Un espejo convexo produce una imagen de un objeto a 5 cm detrás del espejo. Si el objeto está a 10 cm del espejo, ¿cuál es la magnificación de la imagen?",
+        options: ["0.5", "1", "2", "0.25"],
         correct: 0,
-        feedback: "La fuerza se calcula como F = ma = 10 kg * 2 m/s² = 20 N.",
-        help: "Utiliza la segunda ley de Newton para calcular la fuerza."
+        feedback: "La magnificación (M) se calcula como M = -di/do = -5 cm/10 cm = -0.5. La imagen es virtual y menor.",
+        help: "Recuerda que la magnificación negativa indica que la imagen es virtual."
+    },
+    {
+        question: "Un rayo de luz pasa del agua (n = 1.33) al aire (n = 1). Si el ángulo de incidencia es de 60 grados, ¿cuál es el ángulo de refracción?",
+        options: ["38.7 grados", "45 grados", "53.1 grados", "60 grados"],
+        correct: 2,
+        feedback: "Usando la ley de Snell, se obtiene θ2 ≈ 38.7 grados al pasar de un medio más denso a uno menos denso.",
+        help: "Asegúrate de aplicar la ley de Snell correctamente para encontrar el resultado."
+    },
+    {
+        question: "Un espejo cóncavo forma una imagen real a 20 cm del espejo. Si el objeto está a 30 cm del espejo, ¿cuál es la magnificación?",
+        options: ["0.67", "1.5", "2", "3"],
+        correct: 1,
+        feedback: "La magnificación se calcula como M = -di/do = -20 cm/30 cm = -0.67. La imagen es real y menor.",
+        help: "Recuerda que la magnificación también indica el tamaño relativo de la imagen respecto al objeto."
+    },
+    {
+        question: "Un rayo de luz entra a un prisma con un ángulo de incidencia de 45 grados. Si el índice de refracción del prisma es 1.5, ¿cuál es el ángulo de desviación del rayo?",
+        options: ["30 grados", "45 grados", "60 grados", "75 grados"],
+        correct: 1,
+        feedback: "El ángulo de desviación se puede calcular utilizando la ley de Snell y la geometría del prisma.",
+        help: "Recuerda que el ángulo de desviación depende del ángulo de incidencia y del índice de refracción."
+    },
+    {
+        question: "Un rayo de luz incide en un espejo cóncavo con un ángulo de 30 grados. ¿Qué ángulo de reflexión se producirá?",
+        options: ["15 grados", "30 grados", "45 grados", "60 grados"],
+        correct: 1,
+        feedback: "Siguiendo la Ley de Reflexión, el ángulo de reflexión es igual al ángulo de incidencia: 30 grados.",
+        help: "Ambos ángulos se miden respecto a la normal al espejo."
+    },
+    {
+        question: "Un objeto se coloca a 12 cm de un espejo cóncavo. Si la distancia focal del espejo es de 4 cm, ¿dónde se formará la imagen?",
+        options: ["1.5 cm", "3 cm", "6 cm", "12 cm"],
+        correct: 3,
+        feedback: "Aplicando la fórmula del espejo: 1/f = 1/do + 1/di, se obtiene di = 12 cm.",
+        help: "Recuerda que la imagen será real y se forma en el lado opuesto al objeto."
+    },
+    {
+        question: "Un rayo de luz viaja en un medio con un índice de refracción de 2. Si el ángulo de incidencia es de 60 grados, ¿cuál es el ángulo de refracción al entrar en el vacío?",
+        options: ["30 grados", "45 grados", "60 grados", "90 grados"],
+        correct: 1,
+        feedback: "Usando la ley de Snell: n1 * sin(θ1) = n2 * sin(θ2), se obtiene θ2 = 30 grados al entrar en el vacío.",
+        help: "Asegúrate de realizar correctamente los cálculos con la ley de Snell."
+    },
+    {
+        question: "¿Qué ocurre con un rayo de luz cuando pasa de un medio denso a uno menos denso?",
+        options: [
+            "Se refleja completamente.",
+            "Se refracta y se aleja de la normal.",
+            "Se refracta y se acerca a la normal.",
+            "No ocurre ningún cambio."
+        ],
+        correct: 1,
+        feedback: "Cuando la luz pasa de un medio denso a uno menos denso, se refracta y se aleja de la normal.",
+        help: "Este es un principio importante en el estudio de la óptica."
     }
 ];
 
@@ -906,5 +944,6 @@ document.getElementById("next").onclick = function() {
 // Iniciar el cuestionario
 startQuiz();
 
-</script></body>
+    </script>
+</body>
 </html>

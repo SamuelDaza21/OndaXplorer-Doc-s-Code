@@ -257,34 +257,36 @@
             let posX = 30; 
             let posY = height - objectSize; 
 
-            const restitutionCoefficient = 0.8; 
+           
+
+            
+            let isGrounded = false;
+            let cameraOffsetX = 0;
 
             function draw() {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 initializeCanvas(); 
 
-                posX += velocityX * deltaTime * 10; 
-                posY -= (velocityY * deltaTime * 10) - (0.5 * g * Math.pow(time, 2)); 
+                if (!isGrounded) { // Solo actualiza la posición si no está en el suelo
+            posX += velocityX * deltaTime * 10; // Movimiento horizontal
+            posY -= (velocityY * deltaTime * 10) - (0.5 * g * Math.pow(time, 2)); // Movimiento vertical
 
+            
                 if (posY >= height - objectSize) {
                     posY = height - objectSize;
-                    velocityY = -restitutionCoefficient * Math.abs(velocityY); 
-                    velocityY *= 0.8; 
+                    isGrounded = true;
                 }
 
-                if (posX <= objectSize) {
-                    posX = objectSize;
-                    velocityX = -restitutionCoefficient * Math.abs(velocityX); 
-                } else if (posX >= canvas.width - objectSize) {
-                    posX = canvas.width - objectSize; 
-                    velocityX = -restitutionCoefficient * Math.abs(velocityX); 
-                }
+                
+            }
+            
 
                 ctx.fillStyle = '#007bff';
                 ctx.beginPath();
-                ctx.arc(posX, posY, objectSize, 0, 2 * Math.PI);
+                ctx.arc(posX - cameraOffsetX, posY, objectSize, 0, 2 * Math.PI);
                 ctx.fill();
 
+                if (!isGrounded) {
                 const heightCurrent = height - posY - objectSize > 0 ? height - posY - objectSize : 0;
                 const { kineticEnergy, potentialEnergy, totalEnergy } = calculateTotalEnergy(
                     Math.sqrt(Math.pow(velocityX, 2) + Math.pow(velocityY, 2)),
@@ -295,15 +297,18 @@
                 document.getElementById('potentialEnergy').innerText = potentialEnergy.toFixed(2);
                 document.getElementById('kineticEnergy').innerText = kineticEnergy.toFixed(2);
                 document.getElementById('totalEnergy').innerText = totalEnergy.toFixed(2);
+                }
 
                 time += deltaTime;
-                requestAnimationFrame(draw);
+                if (!isGrounded) {
+            requestAnimationFrame(draw);
+        }
             }
 
             draw();
         }
 
-        window.onload = initializeCanvas;
+        
 
         // Calculadora de Energías
         function calculateEnergies() {
@@ -329,6 +334,15 @@
             let potentialEnergy = parseFloat(document.getElementById('potentialEnergy').value);
             let kineticEnergy = parseFloat(document.getElementById('kineticEnergy').value);
             let totalEnergy = parseFloat(document.getElementById('totalEnergy').value);
+
+             // Si alguno de los valores es NaN, establecerlo como null para facilitar las comprobaciones
+    if (isNaN(mass)) mass = null;
+    if (isNaN(height)) height = null;
+    if (isNaN(velocity)) velocity = null;
+    if (isNaN(gravity)) gravity = 9.81; // Valor por defecto de gravedad
+    if (isNaN(potentialEnergy)) potentialEnergy = null;
+    if (isNaN(kineticEnergy)) kineticEnergy = null;
+    if (isNaN(totalEnergy)) totalEnergy = null;
 
             // Resolver energía potencial si falta
             if (!potentialEnergy && mass && height) {

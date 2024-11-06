@@ -7,7 +7,505 @@
     <title>Energías</title>
     <!--La siguiente linea me permite importar iconos para el menu-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="Newton.css">
+    <style>
+        body {
+    background-image: url(img/f1.jpg); /* Light gray background */
+  }
+  
+  /* Responsividad */
+  @media (max-width: 768px) {
+  .menu {
+      flex-direction: column;
+  }
+  
+  .buscador-container input[type="text"] {
+      width: 80%; /* Ancho ajustado para móviles */
+  }
+  
+  .cards-wrapper {
+      flex-direction: column;
+  }
+  
+  .card {
+      width: 100%; /* Tarjetas ocupan el ancho completo en móviles */
+  }
+  }
+  
+  @media (max-width: 480px) {
+  .logo-menu h1 {
+      font-size: 20px; /* Ajusta el tamaño del título */
+  }
+  
+  .menu li a {
+      font-size: 16px; /* Ajusta el tamaño de los enlaces */
+  }
+  
+  .buscador-container .button {
+      width: 30px; /* Botón más pequeño */
+  }
+  
+  .buscador-container input[type="text"] {
+      width: 70%; /* Ancho ajustado para móviles */
+  }
+  }
+  
+  /*Comandos para la pagina principal*/
+  /*Header y menu de navegacion*/
+  .paginaprincipal {
+    display: flex;               /* Hacer que el contenedor sea flex */
+    flex-direction: column;      /* Alinear elementos en columna */
+    min-height: 100vh;          /* Hacer que el contenedor ocupe al menos el alto de la pantalla */
+    animation: fadein 1s ease-in-out;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .logo-menu {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #f0f0f0; /* Light gray background */
+    border-bottom: 1px solid #808080; /* Medium gray border */
+  }
+  
+  .logo-menu img {
+    height: 50px;
+    width: auto;
+    margin-right: 10px;
+  }
+  
+  .logo-menu h1 {
+    font-size: 24px;
+    margin: 0;
+    color: #333333; /* Dark charcoal gray for text */
+  }
+  
+  .menu {
+    margin-left: auto;
+  }
+  
+  .menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+  }
+  
+  .menu li {
+    margin: 0 2px;
+  }
+  
+  .menu li a {
+    text-decoration: none;
+    color: #474747; /* Light blue for links */
+    font-size: 18px;
+  }
+  
+  .menu li a:hover {
+    color: #808080; /* Medium gray on hover */
+  }
+  
+  /* Contenedor principal del menú */
+  .menu {
+    display: flex;
+    align-items: center;
+    gap: 0px;
+  }
+  
+  /* Estilo para los elementos de lista */
+  .menu li {
+    list-style-type: none;
+    transition: transform 0.3s ease;
+  }
+  
+  /* Estilo para los enlaces con íconos */
+  .icon-item {
+    display: flex;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    background-color: rgba(0, 191, 255, 0); /* Transparent light blue */
+    color: #4d4d4d; /* Light blue */
+    text-decoration: none;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    padding: 0 10px;
+  }
+  
+  /* Estilo para los íconos */
+  .icon-item i {
+    font-size: 24px;
+    transition: color 0.3s ease;
+    min-width: 24px;
+  }
+  
+  /* Estilo para el texto asociado */
+  .icon-text {
+    opacity: 0;
+    max-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    transition: opacity 0.3s ease, max-width 0.3s ease, margin-left 0.3s ease;
+  }
+  
+  /* Efecto al pasar el ratón sobre el ítem */
+  .icon-item:hover {
+    width: auto;
+    background-color: rgba(128, 128, 128, 0.2); /* Semi-transparent medium gray */
+  }
+  
+  .icon-item:hover .icon-text {
+    opacity: 1;
+    max-width: 120px;
+    margin-left: 10px;
+  }
+  
+  .icon-item:hover i {
+    color: #333333; /* Dark charcoal gray */
+  }
+  
+  /* Mueve solo los ítems necesarios para hacer espacio */
+  .menu li:hover ~ li {
+    transform: translateX(10px);
+  }
+  
+  /*Comandos para la busqueda*/
+  /* Ajustes generales del nav */
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    background-color: #f0f0f08e; /* Light gray background */
+    padding: 5px;
+  }
+  
+  /* Estilos generales del contenedor del buscador */
+  .buscador-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+  
+  /* Estilo para el campo de búsqueda */
+  .buscador-container input[type="text"] {
+    padding: 5px;
+    border-radius: 4px;
+    font-size: 16px;
+    width: 0;
+    box-sizing: border-box;
+    transition: width 0.4s ease, opacity 0.4s ease;
+    opacity: 0;
+    visibility: hidden;
+    border: 2px solid #808080; /* Medium gray border */
+  }
+  
+  /* Estilo para el botón de búsqueda */
+  .buscador-container .button {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background-color: #363636; /* Color de fondo */
+  color: #F0F0F0; /* Color del texto */
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center; /* Centra verticalmente */
+  justify-content: center; /* Centra horizontalmente */
+  position: relative;
+  overflow: hidden;
+  transition: background-color 0.3s ease, width 0.4s ease, border-radius 0.4s ease;
+  }
+  
+  /* Estilo para el icono dentro del botón */
+  .buscador-container .button i {
+    font-size: 20px;
+    line-height: 1; /* Asegura que no haya espacio extra */
+  }
+  
+    
+    /* Estilo para el texto del botón */
+    .buscador-container .button .button-text {
+      position: absolute;
+      opacity: 0;
+      visibility: hidden;
+      white-space: nowrap;
+      transition: opacity 0.4s ease, visibility 0.4s ease, transform 0.4s ease;
+      transform: translateX(10px);
+    }
+    
+    /* Mostrar input y texto cuando se pasa el mouse por encima */
+    .buscador-container:hover input[type="text"] {
+      width: 300px;
+      height: 35px;
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .buscador-container:hover .button {
+      width: 100px;
+      height: 35px;
+      border-radius: 5px;
+      background-color: #808080; /* Medium gray on hover */
+    }
+    .buscador-container:hover .button .button-text {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(35px);
+    }
+/*CUESTIONARIO*/
+.container {
+    max-width: 800px;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+h1 {
+    color: #333;
+    text-align: center;
+}
+.question {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #e9ecef;
+    border-radius: 5px;
+}
+.options {
+    display: flex;
+    flex-direction: column;
+}
+button {
+    margin-top: 5px;
+    padding: 10px;
+    background-color: #007bff;
+    color: rgb(0, 0, 0);
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+button:hover {
+    background-color: #0056b3;
+}
+.feedback {
+    margin-top: 10px;
+    font-weight: bold;
+}
+.correct {
+    color: rgb(0, 59, 0);
+}
+.incorrect {
+    color: rgb(104, 0, 0);
+}
+#result {
+    text-align: center;
+    font-size: 1.2em;
+    margin-top: 20px;
+}
+/* Nuevas clases para opciones seleccionadas */
+.selected {
+    border: 2px solid #2196F3; /* Azul para opción seleccionada */
+    background-color: #e7f3ff; /* Color de fondo suave */
+}
+
+button.correct {
+    background-color: #28a745; /* Verde para respuestas correctas */
+}
+
+button.incorrect {
+    background-color: #dc3545; /* Rojo para respuestas incorrectas */
+}
+
+/*Ventana de ayuda y puntaje*/
+.score-help-container {
+    position: absolute; /* Posiciona el contenedor en relación a su padre */
+    top: 80px; /* Ajusta según el espacio que quieras debajo del menú */
+    left: 20px; /* Espacio desde la izquierda */
+}
+
+.card {
+    background: rgba(240, 240, 240, 0.6); /* Fondo con un color claro y cierta opacidad */
+    backdrop-filter: blur(10px); /* Efecto de vidrio borroso */
+    border: 2px solid; /* Bordes de 2px */
+    border-image: linear-gradient(to left, #f7ba2b 0%, #ea5358 100%) 1; /* Borde con degradado */
+    width: 250px; /* Ancho de la tarjeta */
+    height: 154px; /* Altura de la tarjeta */
+    border-radius: 1rem; /* Bordes redondeados */
+    overflow: hidden; /* Evita que el contenido se desborde */
+    position: relative; /* Posicionamiento relativo para el pseudo-elemento */
+    display: flex; /* Usar flexbox para centrar el contenido */
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
+    transition: background 0.5s; /* Transición suave para el fondo */
+}
+
+.card-info {
+    --color: #181818; /* Color del texto inicial */
+    color: var(--color); /* Aplica el color */
+    display: flex; /* Usar flexbox para apilar el contenido */
+    flex-direction: column; /* Apila el contenido en columna */
+    justify-content: center; /* Centra verticalmente */
+    align-items: center; /* Centra horizontalmente */
+    width: 100%; /* Ancho completo */
+    height: 100%; /* Altura completa */
+    overflow: hidden; /* Evita el desbordamiento */
+    border-radius: .7rem; /* Bordes redondeados */
+}
+
+.score {
+    font-weight: bold; /* Texto en negrita */
+    letter-spacing: .1em; /* Espaciado entre letras */
+    margin: 5px 0; /* Margen entre textos */
+}
+
+/* El texto de ayuda está oculto inicialmente */
+.help {
+    font-weight: bold; /* Texto en negrita */
+    letter-spacing: .1em; /* Espaciado entre letras */
+    margin: 5px 0; /* Margen entre textos */
+    opacity: 0; /* Ocultar texto */
+    transition: opacity 0.5s; /* Transición suave para la opacidad */
+}
+
+/* Mostrar el texto de ayuda al pasar el mouse */
+.card:hover .help {
+    opacity: 1; /* Cambia la opacidad a 1 */
+}
+
+/* Hover effects */
+.card:hover {
+    background: rgba(240, 240, 240, 0.8); /* Cambia el fondo al hacer hover */
+}
+
+
+/*FOOTER*/
+footer {
+  backdrop-filter: blur(10px); /* Efecto de desenfoque */
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); 
+  color: #333333; /* Color del texto */
+  background: rgba(85, 84, 84, 0.1); /* Color de fondo semi-transparente */
+  margin-top: auto;
+  position: relative;
+  padding: 30px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between; /* Distribuye los elementos: izquierda, centro, derecha */
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.footer-content img {
+  width: 150px; /* Tamaño ajustado de la imagen */
+  height: auto;
+  margin-right: 20px; /* Espacio entre la imagen y el centro */
+}
+
+.footer-info {
+  text-align: center;
+  flex: 1; /* Para que ocupe el espacio central */
+  font-size: 12px; /* Tamaño de fuente más pequeño */
+}
+
+.footer-info h3 {
+  margin-bottom: 10px;
+  font-size: 16px; /* Título más discreto */
+}
+
+.footer-info ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-info li {
+  margin: 5px 0;
+}
+
+.footer-info li a {
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-info li a:hover {
+  color: #292929; /* Cambia de color al pasar el ratón */
+}
+
+.sociales {
+  display: flex;
+  flex-direction: column; /* Coloca las redes sociales en columna */
+  align-items: flex-end; /* Alinea las redes sociales a la derecha */
+}
+
+.redes {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.redes li {
+  list-style: none;
+}
+
+.redes li a {
+  text-decoration: none;
+  font-size: 24px;
+  color: #6e6e6e;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+}
+
+.redes li a:hover {
+  transform: translateY(-3px);
+}
+
+/* Efectos hover para los iconos */
+.redes li a.facebook:hover {
+  color: #4e75c7;
+  filter: drop-shadow(0 0 5px #3b5998)
+          drop-shadow(0 0 10px #3b5998);
+}
+
+.redes li a.instagram:hover {
+  background-image: linear-gradient(135deg, #F58529, #DD2A7B, #8134AF, #515BD4);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 5px #F58529)
+          drop-shadow(0 0 10px #DD2A7B);
+}
+
+.redes li a.github:hover {
+  color: #333333;
+  filter: drop-shadow(0 0 5px #333333)
+          drop-shadow(0 0 10px #333333);
+}
+
+.redes li a.twitter:hover {
+  color: #1DA1F2;
+  filter: drop-shadow(0 0 5px #1DA1F2)
+          drop-shadow(0 0 10px #1DA1F2);
+}
+
+/* Texto del copyright centrado */
+.footer-copy {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 12px;  
+  width: 100%;
+}
+
+    </style>
 </head>
 <body>
     <!--Codigo del cuerpo de la pagina web-->
@@ -81,40 +579,329 @@
 </div>
 <!--FOOTER-->
 <footer>
-    <div class="sociales">
-      <ul class="redes">
-        <!-- Facebook -->
-        <li>
-          <a href="https://www.facebook.com/share/LvQiRqq2j7ahfH8N/?mibextid=qi2Omg" target="_blank" class="facebook">
-            <i class="fab fa-facebook"></i>
-          </a>
-        </li>
+    <div class="footer-content">
+        <img src="img/IMAGOTIPO VERTICAL NEGRO.png" alt="ucundinamarca">
 
-        <!-- Instagram -->
-        <li>
-          <a href="https://www.instagram.com/ondaxplorer?igsh=enNrM3UxZW9rN2o0" target="_blank" class="instagram">
-            <i class="fab fa-instagram"></i>
-          </a>
-        </li>
+        <div class="footer-info">
+            <h3>Contacto</h3>
+            <p>Si tienes alguna pregunta, no dudes en contactarnos a nuestros correos universitarios o a través de las redes sociales.</p>
+            <ul>
+                <li>Samuel Arturo Daza Criado - <a href="mailto:sarturodaza@ucundinamarca.edu.co">sarturodaza@ucundinamarca.edu.co</a></li>
+                <li>Jayber Santiago Castro Parra - <a href="mailto:jsantiagocastro@ucundinamarca.edu.co">jsantiagocastro@ucundinamarca.edu.co</a></li>
+                <li>Natalia Carolina Diaz Calderón - <a href="mailto:ncarolinadiaz@ucundinamarca.edu.co">ncarolinadiaz@ucundinamarca.edu.co</a></li>
+                <li>Maria Alejandra Rubio Cárdenas - <a href="mailto:malejandrarubio@ucundinamarca.edu.co">malejandrarubio@ucundinamarca.edu.co</a></li>
+            </ul>
+        </div>
 
-        <!-- Threads -->
-        <li>
-          <a href="https://twitter.com/" target="_blank" class="twitter">
-              <i class="fab fa-twitter"></i> <!-- Usamos el ícono de Twitter -->
-            </a>
-        </li>
-
-        <!-- GitHub -->
-        <li>
-          <a href="https://github.com/tu-usuario" target="_blank" class="github">
-            <i class="fab fa-github"></i>
-          </a>
-        </li>
-      </ul>
+        <div class="sociales">
+            <ul class="redes">
+                <li>
+                    <a href="https://www.facebook.com/share/LvQiRqq2j7ahfH8N/?mibextid=qi2Omg" target="_blank" class="facebook">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.instagram.com/ondaxplorer?igsh=enNrM3UxZW9rN2o0" target="_blank" class="instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://twitter.com/" target="_blank" class="twitter">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://github.com/SamuelDaza21/OndaXplorer-Doc-s-Code/tree/main" target="_blank" class="github">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
     </div>
-  </div>
-</div>
+
+    <p class="footer-copy">&copy; 2024 OndaXplorer - Todos los derechos reservados.</p>
 </footer>
-    <script src="Newton.js"></script>
+    <script>
+        // script.js
+const questions = [
+    // Preguntas de selección múltiple
+    {
+        question: "¿Cuál es la primera ley de Newton?",
+        options: [
+            "La fuerza es igual a la masa por la aceleración.",
+            "Para cada acción hay una reacción igual y opuesta.",
+            "Todo objeto en reposo permanecerá en reposo, y todo objeto en movimiento continuará en movimiento a menos que una fuerza externa actúe sobre él.",
+            "La energía no se crea ni se destruye."
+        ],
+        correct: 2,
+        feedback: "La primera ley de Newton establece que todo objeto en reposo permanecerá en reposo y todo objeto en movimiento continuará en movimiento a menos que una fuerza externa actúe sobre él.",
+        help: "Esta ley también se conoce como el principio de inercia."
+    },
+    {
+        question: "¿Cuál es la fórmula de la segunda ley de Newton?",
+        options: [
+            "F = ma",
+            "E = mc^2",
+            "v = at",
+            "p = mv"
+        ],
+        correct: 0,
+        feedback: "La segunda ley de Newton se expresa como F = ma, donde F es la fuerza, m es la masa y a es la aceleración.",
+        help: "Esta fórmula indica que la fuerza aplicada a un objeto es igual a la masa de ese objeto multiplicada por su aceleración."
+    },
+    {
+        question: "¿Qué establece la tercera ley de Newton?",
+        options: [
+            "La fuerza es igual a la masa por la aceleración.",
+            "La energía total de un sistema es constante.",
+            "Para cada acción hay una reacción igual y opuesta.",
+            "Todo cuerpo en movimiento tiende a permanecer en movimiento."
+        ],
+        correct: 2,
+        feedback: "La tercera ley de Newton establece que para cada acción hay una reacción igual y opuesta.",
+        help: "Esto significa que si un objeto A ejerce una fuerza sobre un objeto B, el objeto B ejerce una fuerza de igual magnitud pero en dirección opuesta sobre el objeto A."
+    },
+    {
+        question: "Si un coche de 1000 kg acelera a 2 m/s², ¿cuál es la fuerza que actúa sobre él?",
+        options: ["500 N", "1000 N", "2000 N", "4000 N"],
+        correct: 2,
+        feedback: "La fuerza se calcula como F = ma = 1000 kg * 2 m/s² = 2000 N.",
+        help: "Fuerza = masa * aceleración."
+    },
+    {
+        question: "¿Qué se entiende por inercia?",
+        options: [
+            "La resistencia de un objeto a cambiar su estado de movimiento.",
+            "La cantidad de energía que posee un objeto.",
+            "La fuerza de gravedad que actúa sobre un objeto.",
+            "La velocidad máxima que puede alcanzar un objeto."
+        ],
+        correct: 0,
+        feedback: "La inercia es la propiedad de los objetos de resistir cambios en su estado de movimiento.",
+        help: "Un objeto en reposo permanecerá en reposo a menos que se aplique una fuerza externa."
+    },
+    {
+        question: "¿Cómo se relacionan la masa y la aceleración en la segunda ley de Newton?",
+        options: [
+            "La masa es directamente proporcional a la aceleración.",
+            "La masa es inversamente proporcional a la aceleración.",
+            "La aceleración es igual a la masa multiplicada por la fuerza.",
+            "La fuerza es igual a la masa dividida por la aceleración."
+        ],
+        correct: 1,
+        feedback: "La masa es inversamente proporcional a la aceleración cuando se aplica una fuerza constante.",
+        help: "Si aumentas la masa, la aceleración disminuye para una fuerza dada."
+    },
+    {
+        question: "Si dos fuerzas de 5 N actúan en direcciones opuestas sobre un objeto, ¿cuál es la fuerza neta?",
+        options: ["0 N", "5 N", "10 N", "2.5 N"],
+        correct: 0,
+        feedback: "Las fuerzas se cancelan, por lo que la fuerza neta es 0 N.",
+        help: "Cuando las fuerzas son iguales y opuestas, se anulan entre sí."
+    },
+    {
+        question: "¿Qué ocurre con un objeto en movimiento cuando deja de actuar la fuerza sobre él?",
+        options: [
+            "El objeto se detiene inmediatamente.",
+            "El objeto sigue moviéndose a la misma velocidad.",
+            "El objeto cambia de dirección.",
+            "El objeto acelera."
+        ],
+        correct: 1,
+        feedback: "De acuerdo con la primera ley de Newton, un objeto en movimiento continuará en movimiento a la misma velocidad a menos que una fuerza externa actúe sobre él.",
+        help: "Esto se conoce como inercia."
+    },
+    {
+        question: "¿Qué describe la relación entre fuerza, masa y aceleración?",
+        options: [
+            "La ley de conservación de la energía.",
+            "La ley de gravitación universal.",
+            "La segunda ley de Newton.",
+            "La ley de acción y reacción."
+        ],
+        correct: 2,
+        feedback: "La segunda ley de Newton describe cómo la fuerza, la masa y la aceleración están relacionadas.",
+        help: "La fórmula es F = ma."
+    },
+    {
+        question: "Si un objeto está en equilibrio, ¿cuál es la suma de las fuerzas que actúan sobre él?",
+        options: [
+            "Mayor que cero.",
+            "Menor que cero.",
+            "Igual a cero.",
+            "Depende de la masa del objeto."
+        ],
+        correct: 2,
+        feedback: "Si un objeto está en equilibrio, la suma de las fuerzas que actúan sobre él es igual a cero.",
+        help: "Esto significa que no hay aceleración."
+    },
+
+    // Preguntas de ejercicios
+    {
+        question: "Un objeto de 10 kg está en reposo. ¿Qué fuerza se necesita para darle una aceleración de 3 m/s²?",
+        options: ["10 N", "30 N", "3 N", "0 N"],
+        correct: 1,
+        feedback: "La fuerza necesaria se calcula como F = ma = 10 kg * 3 m/s² = 30 N.",
+        help: "F = masa * aceleración."
+    },
+    {
+        question: "Un coche de 1500 kg frena y reduce su velocidad de 20 m/s a 0 m/s en 5 segundos. ¿Cuál es la fuerza de fricción?",
+        options: ["3000 N", "6000 N", "1500 N", "750 N"],
+        correct: 1,
+        feedback: "La aceleración es -4 m/s², por lo que la fuerza de fricción es F = ma = 1500 kg * -4 m/s² = -6000 N.",
+        help: "La fuerza es negativa porque actúa en dirección opuesta al movimiento."
+    },
+    {
+        question: "¿Cuánto es la fuerza neta si un objeto de 5 kg tiene dos fuerzas de 10 N y -5 N actuando sobre él?",
+        options: ["15 N", "5 N", "10 N", "25 N"],
+        correct: 1,
+        feedback: "La fuerza neta es 10 N - 5 N = 5 N.",
+        help: "La fuerza neta se calcula sumando las fuerzas, considerando sus direcciones."
+    },
+    {
+        question: "Un objeto de 2 kg es empujado con una fuerza de 10 N. ¿Cuál es su aceleración?",
+        options: ["2 m/s²", "5 m/s²", "10 m/s²", "20 m/s²"],
+        correct: 1,
+        feedback: "La aceleración se calcula como a = F/m = 10 N / 2 kg = 5 m/s².",
+        help: "Aceleración es fuerza dividida por masa."
+    },
+    {
+        question: "¿Cuál es la fuerza que actúa sobre un objeto de 8 kg en caída libre? (g = 9.81 m/s²)",
+        options: ["78.48 N", "9.81 N", "80 N", "15 N"],
+        correct: 0,
+        feedback: "La fuerza es F = mg = 8 kg * 9.81 m/s² = 78.48 N.",
+        help: "La fuerza de gravedad actúa sobre todos los objetos."
+    },
+    {
+        question: "Si un objeto de 10 kg se mueve a una velocidad de 15 m/s, ¿cuál es su energía cinética?",
+        options: ["1125 J", "750 J", "1500 J", "3000 J"],
+        correct: 0,
+        feedback: "La energía cinética se calcula como E_k = 1/2 mv² = 1/2 * 10 kg * (15 m/s)² = 1125 J.",
+        help: "E_k = 1/2 * masa * velocidad al cuadrado."
+    },
+    {
+        question: "Un tren de 3000 kg está en reposo y recibe una fuerza de 6000 N. ¿Cuál es su aceleración?",
+        options: ["1 m/s²", "2 m/s²", "3 m/s²", "4 m/s²"],
+        correct: 1,
+        feedback: "La aceleración se calcula como a = F/m = 6000 N / 3000 kg = 2 m/s².",
+        help: "Utiliza la segunda ley de Newton para calcular la aceleración."
+    },
+    {
+        question: "Si dos objetos de 1 kg se mueven a 1 m/s, ¿cuál es el momento total del sistema?",
+        options: ["0 kg*m/s", "1 kg*m/s", "2 kg*m/s", "1/2 kg*m/s"],
+        correct: 2,
+        feedback: "El momento se calcula como p = mv, por lo que p_total = 1 kg * 1 m/s + 1 kg * 1 m/s = 2 kg*m/s.",
+        help: "El momento total es la suma de los momentos individuales."
+    },
+    {
+        question: "Un cohete de 50 kg empuja hacia abajo con una fuerza de 500 N. ¿Cuál es su aceleración?",
+        options: ["0 m/s²", "5 m/s²", "10 m/s²", "20 m/s²"],
+        correct: 2,
+        feedback: "La aceleración se calcula como a = F/m = 500 N / 50 kg = 10 m/s².",
+        help: "Aplica la segunda ley de Newton."
+    }
+];
+
+
+// Inicializar variables
+let currentQuestionIndex = 0;
+let score = 0;
+
+// Función para mezclar preguntas
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+// Función para iniciar el cuestionario
+function startQuiz() {
+    shuffleArray(questions);
+    showQuestion();
+}
+
+// Función para mostrar la pregunta actual
+function showQuestion() {
+    const quizContainer = document.getElementById("quiz");
+    quizContainer.innerHTML = ""; // Limpiar contenido anterior
+    const currentQuestion = questions[currentQuestionIndex];
+    
+    const questionElement = document.createElement("div");
+    questionElement.className = "question";
+    questionElement.textContent = currentQuestion.question;
+    quizContainer.appendChild(questionElement);
+    
+    const optionsContainer = document.createElement("div");
+    optionsContainer.className = "options";
+    currentQuestion.options.forEach((option, index) => {
+        const button = document.createElement("button");
+        button.textContent = option;
+        button.onclick = () => selectAnswer(index);
+        optionsContainer.appendChild(button);
+    });
+    
+    quizContainer.appendChild(optionsContainer);
+    
+    // Mostrar la ayuda correspondiente
+    const helpBox = document.getElementById("help");
+    helpBox.innerHTML = `<strong>Ayuda:</strong> ${currentQuestion.help}`;
+}
+
+// Función para seleccionar respuesta
+function selectAnswer(selectedIndex) {
+    const currentQuestion = questions[currentQuestionIndex];
+    const feedbackContainer = document.getElementById("result");
+    const scoreContainer = document.getElementById("score");
+
+    // Obtener todos los botones de opciones
+    const buttons = document.querySelectorAll(".options button");
+
+    // Deshabilitar todos los botones
+    buttons.forEach((button, index) => {
+        button.disabled = true; // Deshabilitar todas las opciones
+
+        // Marcar la opción seleccionada y la correcta
+        if (index === selectedIndex) {
+            button.classList.add("selected"); // Marcar la opción seleccionada
+            if (index === currentQuestion.correct) {
+                button.classList.add("correct"); // Opción correcta
+            } else {
+                button.classList.add("incorrect"); // Opción incorrecta
+            }
+        } else if (index === currentQuestion.correct) {
+            button.classList.add("correct"); // Marcar la opción correcta
+        }
+    });
+
+    if (selectedIndex === currentQuestion.correct) {
+        feedbackContainer.innerHTML = `<span class="correct">Correcto!</span> ${currentQuestion.feedback}`;
+        score += 1; // Sumar puntos si es correcto
+    } else {
+        feedbackContainer.innerHTML = `<span class="incorrect">Incorrecto.</span> ${currentQuestion.feedback}`;
+    }
+
+    scoreContainer.innerHTML = `Puntaje: ${score}`;
+    document.getElementById("next").style.display = "block"; // Mostrar botón "Siguiente"
+}
+
+
+// Función para ir a la siguiente pregunta
+document.getElementById("next").onclick = function() {
+    currentQuestionIndex++;
+    if (currentQuestionIndex < questions.length) {
+        showQuestion();
+        document.getElementById("result").innerHTML = ""; // Limpiar resultado
+        document.getElementById("next").style.display = "none"; // Ocultar botón "Siguiente"
+    } else {
+        document.getElementById("quiz").innerHTML = "<h2>¡Cuestionario terminado!</h2>";
+        document.getElementById("next").style.display = "none"; // Ocultar botón "Siguiente"
+    }
+};
+
+// Iniciar el cuestionario
+startQuiz();
+
+    </script>
 </body>
 </html>

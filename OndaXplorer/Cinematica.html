@@ -7,7 +7,505 @@
     <title>Energías</title>
     <!--La siguiente linea me permite importar iconos para el menu-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="Cinematica.css">
+    <style>
+        body {
+    background-image: url(img/f1.jpg); /* Light gray background */
+  }
+  
+  /* Responsividad */
+  @media (max-width: 768px) {
+  .menu {
+      flex-direction: column;
+  }
+  
+  .buscador-container input[type="text"] {
+      width: 80%; /* Ancho ajustado para móviles */
+  }
+  
+  .cards-wrapper {
+      flex-direction: column;
+  }
+  
+  .card {
+      width: 100%; /* Tarjetas ocupan el ancho completo en móviles */
+  }
+  }
+  
+  @media (max-width: 480px) {
+  .logo-menu h1 {
+      font-size: 20px; /* Ajusta el tamaño del título */
+  }
+  
+  .menu li a {
+      font-size: 16px; /* Ajusta el tamaño de los enlaces */
+  }
+  
+  .buscador-container .button {
+      width: 30px; /* Botón más pequeño */
+  }
+  
+  .buscador-container input[type="text"] {
+      width: 70%; /* Ancho ajustado para móviles */
+  }
+  }
+  
+  /*Comandos para la pagina principal*/
+  /*Header y menu de navegacion*/
+  .paginaprincipal {
+    display: flex;               /* Hacer que el contenedor sea flex */
+    flex-direction: column;      /* Alinear elementos en columna */
+    min-height: 100vh;          /* Hacer que el contenedor ocupe al menos el alto de la pantalla */
+    animation: fadein 1s ease-in-out;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .logo-menu {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #f0f0f0; /* Light gray background */
+    border-bottom: 1px solid #808080; /* Medium gray border */
+  }
+  
+  .logo-menu img {
+    height: 50px;
+    width: auto;
+    margin-right: 10px;
+  }
+  
+  .logo-menu h1 {
+    font-size: 24px;
+    margin: 0;
+    color: #333333; /* Dark charcoal gray for text */
+  }
+  
+  .menu {
+    margin-left: auto;
+  }
+  
+  .menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+  }
+  
+  .menu li {
+    margin: 0 2px;
+  }
+  
+  .menu li a {
+    text-decoration: none;
+    color: #474747; /* Light blue for links */
+    font-size: 18px;
+  }
+  
+  .menu li a:hover {
+    color: #808080; /* Medium gray on hover */
+  }
+  
+  /* Contenedor principal del menú */
+  .menu {
+    display: flex;
+    align-items: center;
+    gap: 0px;
+  }
+  
+  /* Estilo para los elementos de lista */
+  .menu li {
+    list-style-type: none;
+    transition: transform 0.3s ease;
+  }
+  
+  /* Estilo para los enlaces con íconos */
+  .icon-item {
+    display: flex;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    background-color: rgba(0, 191, 255, 0); /* Transparent light blue */
+    color: #4d4d4d; /* Light blue */
+    text-decoration: none;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    padding: 0 10px;
+  }
+  
+  /* Estilo para los íconos */
+  .icon-item i {
+    font-size: 24px;
+    transition: color 0.3s ease;
+    min-width: 24px;
+  }
+  
+  /* Estilo para el texto asociado */
+  .icon-text {
+    opacity: 0;
+    max-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    transition: opacity 0.3s ease, max-width 0.3s ease, margin-left 0.3s ease;
+  }
+  
+  /* Efecto al pasar el ratón sobre el ítem */
+  .icon-item:hover {
+    width: auto;
+    background-color: rgba(128, 128, 128, 0.2); /* Semi-transparent medium gray */
+  }
+  
+  .icon-item:hover .icon-text {
+    opacity: 1;
+    max-width: 120px;
+    margin-left: 10px;
+  }
+  
+  .icon-item:hover i {
+    color: #333333; /* Dark charcoal gray */
+  }
+  
+  /* Mueve solo los ítems necesarios para hacer espacio */
+  .menu li:hover ~ li {
+    transform: translateX(10px);
+  }
+  
+  /*Comandos para la busqueda*/
+  /* Ajustes generales del nav */
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    background-color: #f0f0f08e; /* Light gray background */
+    padding: 5px;
+  }
+  
+  /* Estilos generales del contenedor del buscador */
+  .buscador-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+  
+  /* Estilo para el campo de búsqueda */
+  .buscador-container input[type="text"] {
+    padding: 5px;
+    border-radius: 4px;
+    font-size: 16px;
+    width: 0;
+    box-sizing: border-box;
+    transition: width 0.4s ease, opacity 0.4s ease;
+    opacity: 0;
+    visibility: hidden;
+    border: 2px solid #808080; /* Medium gray border */
+  }
+  
+  /* Estilo para el botón de búsqueda */
+  .buscador-container .button {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background-color: #363636; /* Color de fondo */
+  color: #F0F0F0; /* Color del texto */
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center; /* Centra verticalmente */
+  justify-content: center; /* Centra horizontalmente */
+  position: relative;
+  overflow: hidden;
+  transition: background-color 0.3s ease, width 0.4s ease, border-radius 0.4s ease;
+  }
+  
+  /* Estilo para el icono dentro del botón */
+  .buscador-container .button i {
+    font-size: 20px;
+    line-height: 1; /* Asegura que no haya espacio extra */
+  }
+  
+    
+    /* Estilo para el texto del botón */
+    .buscador-container .button .button-text {
+      position: absolute;
+      opacity: 0;
+      visibility: hidden;
+      white-space: nowrap;
+      transition: opacity 0.4s ease, visibility 0.4s ease, transform 0.4s ease;
+      transform: translateX(10px);
+    }
+    
+    /* Mostrar input y texto cuando se pasa el mouse por encima */
+    .buscador-container:hover input[type="text"] {
+      width: 300px;
+      height: 35px;
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .buscador-container:hover .button {
+      width: 100px;
+      height: 35px;
+      border-radius: 5px;
+      background-color: #808080; /* Medium gray on hover */
+    }
+    .buscador-container:hover .button .button-text {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(35px);
+    }
+/*CUESTIONARIO*/
+.container {
+    max-width: 800px;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+h1 {
+    color: #333;
+    text-align: center;
+}
+.question {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #e9ecef;
+    border-radius: 5px;
+}
+.options {
+    display: flex;
+    flex-direction: column;
+}
+button {
+    margin-top: 5px;
+    padding: 10px;
+    background-color: #007bff;
+    color: rgb(0, 0, 0);
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+button:hover {
+    background-color: #0056b3;
+}
+.feedback {
+    margin-top: 10px;
+    font-weight: bold;
+}
+.correct {
+    color: rgb(0, 59, 0);
+}
+.incorrect {
+    color: rgb(104, 0, 0);
+}
+#result {
+    text-align: center;
+    font-size: 1.2em;
+    margin-top: 20px;
+}
+/* Nuevas clases para opciones seleccionadas */
+.selected {
+    border: 2px solid #2196F3; /* Azul para opción seleccionada */
+    background-color: #e7f3ff; /* Color de fondo suave */
+}
+
+button.correct {
+    background-color: #28a745; /* Verde para respuestas correctas */
+}
+
+button.incorrect {
+    background-color: #dc3545; /* Rojo para respuestas incorrectas */
+}
+
+/*Ventana de ayuda y puntaje*/
+.score-help-container {
+    position: absolute; /* Posiciona el contenedor en relación a su padre */
+    top: 80px; /* Ajusta según el espacio que quieras debajo del menú */
+    left: 20px; /* Espacio desde la izquierda */
+}
+
+.card {
+    background: rgba(240, 240, 240, 0.6); /* Fondo con un color claro y cierta opacidad */
+    backdrop-filter: blur(10px); /* Efecto de vidrio borroso */
+    border: 2px solid; /* Bordes de 2px */
+    border-image: linear-gradient(to left, #f7ba2b 0%, #ea5358 100%) 1; /* Borde con degradado */
+    width: 250px; /* Ancho de la tarjeta */
+    height: 154px; /* Altura de la tarjeta */
+    border-radius: 1rem; /* Bordes redondeados */
+    overflow: hidden; /* Evita que el contenido se desborde */
+    position: relative; /* Posicionamiento relativo para el pseudo-elemento */
+    display: flex; /* Usar flexbox para centrar el contenido */
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
+    transition: background 0.5s; /* Transición suave para el fondo */
+}
+
+.card-info {
+    --color: #181818; /* Color del texto inicial */
+    color: var(--color); /* Aplica el color */
+    display: flex; /* Usar flexbox para apilar el contenido */
+    flex-direction: column; /* Apila el contenido en columna */
+    justify-content: center; /* Centra verticalmente */
+    align-items: center; /* Centra horizontalmente */
+    width: 100%; /* Ancho completo */
+    height: 100%; /* Altura completa */
+    overflow: hidden; /* Evita el desbordamiento */
+    border-radius: .7rem; /* Bordes redondeados */
+}
+
+.score {
+    font-weight: bold; /* Texto en negrita */
+    letter-spacing: .1em; /* Espaciado entre letras */
+    margin: 5px 0; /* Margen entre textos */
+}
+
+/* El texto de ayuda está oculto inicialmente */
+.help {
+    font-weight: bold; /* Texto en negrita */
+    letter-spacing: .1em; /* Espaciado entre letras */
+    margin: 5px 0; /* Margen entre textos */
+    opacity: 0; /* Ocultar texto */
+    transition: opacity 0.5s; /* Transición suave para la opacidad */
+}
+
+/* Mostrar el texto de ayuda al pasar el mouse */
+.card:hover .help {
+    opacity: 1; /* Cambia la opacidad a 1 */
+}
+
+/* Hover effects */
+.card:hover {
+    background: rgba(240, 240, 240, 0.8); /* Cambia el fondo al hacer hover */
+}
+
+
+/*FOOTER*/
+footer {
+  backdrop-filter: blur(10px); /* Efecto de desenfoque */
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); 
+  color: #333333; /* Color del texto */
+  background: rgba(85, 84, 84, 0.1); /* Color de fondo semi-transparente */
+  margin-top: auto;
+  position: relative;
+  padding: 30px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between; /* Distribuye los elementos: izquierda, centro, derecha */
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.footer-content img {
+  width: 150px; /* Tamaño ajustado de la imagen */
+  height: auto;
+  margin-right: 20px; /* Espacio entre la imagen y el centro */
+}
+
+.footer-info {
+  text-align: center;
+  flex: 1; /* Para que ocupe el espacio central */
+  font-size: 12px; /* Tamaño de fuente más pequeño */
+}
+
+.footer-info h3 {
+  margin-bottom: 10px;
+  font-size: 16px; /* Título más discreto */
+}
+
+.footer-info ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-info li {
+  margin: 5px 0;
+}
+
+.footer-info li a {
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-info li a:hover {
+  color: #292929; /* Cambia de color al pasar el ratón */
+}
+
+.sociales {
+  display: flex;
+  flex-direction: column; /* Coloca las redes sociales en columna */
+  align-items: flex-end; /* Alinea las redes sociales a la derecha */
+}
+
+.redes {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.redes li {
+  list-style: none;
+}
+
+.redes li a {
+  text-decoration: none;
+  font-size: 24px;
+  color: #6e6e6e;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+}
+
+.redes li a:hover {
+  transform: translateY(-3px);
+}
+
+/* Efectos hover para los iconos */
+.redes li a.facebook:hover {
+  color: #4e75c7;
+  filter: drop-shadow(0 0 5px #3b5998)
+          drop-shadow(0 0 10px #3b5998);
+}
+
+.redes li a.instagram:hover {
+  background-image: linear-gradient(135deg, #F58529, #DD2A7B, #8134AF, #515BD4);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 5px #F58529)
+          drop-shadow(0 0 10px #DD2A7B);
+}
+
+.redes li a.github:hover {
+  color: #333333;
+  filter: drop-shadow(0 0 5px #333333)
+          drop-shadow(0 0 10px #333333);
+}
+
+.redes li a.twitter:hover {
+  color: #1DA1F2;
+  filter: drop-shadow(0 0 5px #1DA1F2)
+          drop-shadow(0 0 10px #1DA1F2);
+}
+
+/* Texto del copyright centrado */
+.footer-copy {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 12px;  
+  width: 100%;
+}
+
+    </style>
 </head>
 <body>
     <!--Codigo del cuerpo de la pagina web-->
@@ -81,40 +579,337 @@
 </div>
 <!--FOOTER-->
 <footer>
-    <div class="sociales">
-      <ul class="redes">
-        <!-- Facebook -->
-        <li>
-          <a href="https://www.facebook.com/share/LvQiRqq2j7ahfH8N/?mibextid=qi2Omg" target="_blank" class="facebook">
-            <i class="fab fa-facebook"></i>
-          </a>
-        </li>
+    <div class="footer-content">
+        <img src="img/IMAGOTIPO VERTICAL NEGRO.png" alt="ucundinamarca">
 
-        <!-- Instagram -->
-        <li>
-          <a href="https://www.instagram.com/ondaxplorer?igsh=enNrM3UxZW9rN2o0" target="_blank" class="instagram">
-            <i class="fab fa-instagram"></i>
-          </a>
-        </li>
+        <div class="footer-info">
+            <h3>Contacto</h3>
+            <p>Si tienes alguna pregunta, no dudes en contactarnos a nuestros correos universitarios o a través de las redes sociales.</p>
+            <ul>
+                <li>Samuel Arturo Daza Criado - <a href="mailto:sarturodaza@ucundinamarca.edu.co">sarturodaza@ucundinamarca.edu.co</a></li>
+                <li>Jayber Santiago Castro Parra - <a href="mailto:jsantiagocastro@ucundinamarca.edu.co">jsantiagocastro@ucundinamarca.edu.co</a></li>
+                <li>Natalia Carolina Diaz Calderón - <a href="mailto:ncarolinadiaz@ucundinamarca.edu.co">ncarolinadiaz@ucundinamarca.edu.co</a></li>
+                <li>Maria Alejandra Rubio Cárdenas - <a href="mailto:malejandrarubio@ucundinamarca.edu.co">malejandrarubio@ucundinamarca.edu.co</a></li>
+            </ul>
+        </div>
 
-        <!-- Threads -->
-        <li>
-          <a href="https://twitter.com/" target="_blank" class="twitter">
-              <i class="fab fa-twitter"></i> <!-- Usamos el ícono de Twitter -->
-            </a>
-        </li>
-
-        <!-- GitHub -->
-        <li>
-          <a href="https://github.com/tu-usuario" target="_blank" class="github">
-            <i class="fab fa-github"></i>
-          </a>
-        </li>
-      </ul>
+        <div class="sociales">
+            <ul class="redes">
+                <li>
+                    <a href="https://www.facebook.com/share/LvQiRqq2j7ahfH8N/?mibextid=qi2Omg" target="_blank" class="facebook">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.instagram.com/ondaxplorer?igsh=enNrM3UxZW9rN2o0" target="_blank" class="instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://twitter.com/" target="_blank" class="twitter">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://github.com/SamuelDaza21/OndaXplorer-Doc-s-Code/tree/main" target="_blank" class="github">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
     </div>
-  </div>
-</div>
+
+    <p class="footer-copy">&copy; 2024 OndaXplorer - Todos los derechos reservados.</p>
 </footer>
-    <script src="Cinematica.js"></script>
+    <script>
+        const questions = [
+    // Preguntas de selección múltiple
+    {
+        question: "¿Qué es la cinemática?",
+        options: [
+            "El estudio de las fuerzas que actúan sobre los cuerpos.",
+            "El estudio del movimiento de los cuerpos sin considerar las causas.",
+            "El estudio de las interacciones entre cuerpos.",
+            "El estudio de la energía y el trabajo."
+        ],
+        correct: 1,
+        feedback: "La cinemática es el estudio del movimiento de los cuerpos sin considerar las fuerzas que lo causan.",
+        help: "Se centra en describir cómo se mueven los objetos."
+    },
+    {
+        question: "¿Qué magnitud física describe la rapidez de un objeto en movimiento?",
+        options: [
+            "Aceleración",
+            "Velocidad",
+            "Desplazamiento",
+            "Fuerza"
+        ],
+        correct: 1,
+        feedback: "La velocidad es la magnitud que describe la rapidez y la dirección del movimiento de un objeto.",
+        help: "La velocidad se define como el cambio de posición por unidad de tiempo."
+    },
+    {
+        question: "Si un objeto se mueve en línea recta con velocidad constante, ¿cuál es su aceleración?",
+        options: [
+            "Mayor que cero",
+            "Igual a cero",
+            "Menor que cero",
+            "Variable"
+        ],
+        correct: 1,
+        feedback: "La aceleración es igual a cero si la velocidad es constante.",
+        help: "La aceleración se define como el cambio de velocidad por unidad de tiempo."
+    },
+    {
+        question: "¿Qué tipo de movimiento describe un objeto que se desplaza hacia adelante y luego se detiene?",
+        options: [
+            "Movimiento rectilíneo uniforme",
+            "Movimiento rectilíneo uniformemente acelerado",
+            "Movimiento circular",
+            "Movimiento oscilatorio"
+        ],
+        correct: 1,
+        feedback: "Este movimiento se describe como movimiento rectilíneo uniformemente acelerado si hay un cambio en la velocidad.",
+        help: "Puede involucrar aceleración y desaceleración."
+    },
+    {
+        question: "La fórmula \( v = v_0 + at \) se utiliza para calcular:",
+        options: [
+            "El desplazamiento",
+            "La velocidad final",
+            "La aceleración",
+            "El tiempo"
+        ],
+        correct: 1,
+        feedback: "Esta fórmula se utiliza para calcular la velocidad final de un objeto en movimiento rectilíneo uniformemente acelerado.",
+        help: "Donde \( v_0 \) es la velocidad inicial, \( a \) es la aceleración y \( t \) es el tiempo."
+    },
+    {
+        question: "¿Cómo se define el desplazamiento?",
+        options: [
+            "La distancia recorrida por un objeto en un intervalo de tiempo.",
+            "La distancia más corta entre el punto inicial y el punto final.",
+            "El cambio en la velocidad de un objeto.",
+            "El tiempo que tarda un objeto en moverse."
+        ],
+        correct: 1,
+        feedback: "El desplazamiento es la distancia más corta entre el punto inicial y el punto final, teniendo en cuenta la dirección.",
+        help: "Es una magnitud vectorial."
+    },
+    {
+        question: "¿Qué indica una gráfica de posición vs. tiempo con una pendiente positiva constante?",
+        options: [
+            "El objeto está en reposo.",
+            "El objeto se mueve con velocidad constante.",
+            "El objeto acelera.",
+            "El objeto se mueve hacia atrás."
+        ],
+        correct: 1,
+        feedback: "Una pendiente positiva constante indica que el objeto se mueve con velocidad constante.",
+        help: "La pendiente representa la velocidad en este tipo de gráfica."
+    },
+    {
+        question: "La aceleración es positiva cuando:",
+        options: [
+            "La velocidad del objeto disminuye.",
+            "La velocidad del objeto aumenta.",
+            "El objeto está en reposo.",
+            "El objeto se mueve en dirección opuesta."
+        ],
+        correct: 1,
+        feedback: "La aceleración es positiva cuando la velocidad del objeto está aumentando.",
+        help: "Si un objeto está desacelerando, su aceleración es negativa."
+    },
+    {
+        question: "¿Cuál es la unidad de medida de la aceleración en el Sistema Internacional de Unidades (SI)?",
+        options: [
+            "m/s",
+            "m/s²",
+            "km/h",
+            "m²/s"
+        ],
+        correct: 1,
+        feedback: "La unidad de medida de la aceleración es metros por segundo al cuadrado (m/s²).",
+        help: "Se define como el cambio de velocidad por unidad de tiempo."
+    },
+    {
+        question: "En un movimiento rectilíneo uniformemente acelerado, la distancia recorrida se puede calcular con la fórmula:",
+        options: [
+            "d = v*t",
+            "d = v_0*t + 1/2 at²",
+            "d = v^2 / 2a",
+            "d = a*t²"
+        ],
+        correct: 1,
+        feedback: "La fórmula correcta es d = v_0*t + 1/2 at², donde \( d \) es la distancia, \( v_0 \) es la velocidad inicial, \( a \) es la aceleración y \( t \) es el tiempo.",
+        help: "Esta fórmula describe la distancia recorrida bajo aceleración constante."
+    },
+
+    // Preguntas de ejercicios
+    {
+        question: "Un coche parte del reposo y acelera uniformemente a 2 m/s². ¿Qué velocidad alcanzará después de 5 segundos?",
+        options: ["10 m/s", "5 m/s", "15 m/s", "2 m/s"],
+        correct: 0,
+        feedback: "Usando la fórmula v = v_0 + at: v = 0 + (2 m/s²)(5 s) = 10 m/s.",
+        help: "La velocidad final se calcula a partir de la aceleración y el tiempo."
+    },
+    {
+        question: "Un ciclista viaja a una velocidad constante de 15 m/s durante 10 segundos. ¿Cuál es la distancia recorrida?",
+        options: ["150 m", "15 m", "1.5 m", "100 m"],
+        correct: 0,
+        feedback: "La distancia se calcula como d = v * t = 15 m/s * 10 s = 150 m.",
+        help: "En movimiento uniforme, la distancia es la velocidad multiplicada por el tiempo."
+    },
+    {
+        question: "Un objeto se mueve en línea recta con una velocidad de 20 m/s. Si reduce su velocidad a 10 m/s en 5 segundos, ¿cuál es su aceleración?",
+        options: ["-2 m/s²", "-4 m/s²", "2 m/s²", "4 m/s²"],
+        correct: 0,
+        feedback: "La aceleración se calcula como a = (v - v_0) / t = (10 m/s - 20 m/s) / 5 s = -2 m/s².",
+        help: "La aceleración es negativa porque el objeto está desacelerando."
+    },
+    {
+        question: "Si un objeto se mueve a 30 m/s y frena con una aceleración de -3 m/s², ¿cuánto tiempo tardará en detenerse?",
+        options: ["10 s", "15 s", "5 s", "20 s"],
+        correct: 0,
+        feedback: "El tiempo se calcula como t = (v - v_0) / a = (0 m/s - 30 m/s) / (-3 m/s²) = 10 s.",
+        help: "El objeto se detendrá cuando su velocidad sea cero."
+    },
+    {
+        question: "Un automóvil se desplaza 100 m en 4 segundos. ¿Cuál es su velocidad promedio?",
+        options: ["25 m/s", "20 m/s", "30 m/s", "10 m/s"],
+        correct: 1,
+        feedback: "La velocidad promedio se calcula como v = d / t = 100 m / 4 s = 25 m/s.",
+        help: "La velocidad promedio es la distancia total recorrida dividida por el tiempo total."
+    },
+    {
+        question: "Un objeto cae desde una altura de 80 m. Si despreciamos la resistencia del aire, ¿cuánto tiempo tardará en llegar al suelo? (Usa g = 9.81 m/s²)",
+        options: ["4 s", "5 s", "8 s", "9 s"],
+        correct: 0,
+        feedback: "Usando la fórmula d = 1/2 g t²: 80 m = 1/2 * 9.81 m/s² * t². Resolviendo, t ≈ 4 s.",
+        help: "Se utiliza la ecuación del movimiento uniformemente acelerado."
+    },
+    {
+        question: "¿Cuánto recorrerá un coche que viaja a 60 km/h durante 2 horas?",
+        options: ["120 km", "60 km", "100 km", "150 km"],
+        correct: 0,
+        feedback: "La distancia es d = v * t = 60 km/h * 2 h = 120 km.",
+        help: "Convierte la velocidad a la misma unidad que el tiempo."
+    },
+    {
+        question: "Un objeto se mueve hacia la derecha a 5 m/s y luego se mueve hacia la izquierda a 3 m/s. ¿Cuál es su velocidad media en un intervalo de tiempo si se mueve 10 segundos en total?",
+        options: ["1 m/s", "2 m/s", "3 m/s", "4 m/s"],
+        correct: 0,
+        feedback: "La velocidad media es el desplazamiento total dividido por el tiempo. Desplazamiento: 5 m/s * 10 s - 3 m/s * 10 s = 20 m.",
+        help: "La velocidad media considera tanto la dirección como la magnitud."
+    },
+    {
+        question: "Un corredor realiza una vuelta de 400 m en 50 segundos. ¿Cuál es su velocidad promedio?",
+        options: ["6 m/s", "8 m/s", "10 m/s", "12 m/s"],
+        correct: 1,
+        feedback: "La velocidad promedio se calcula como v = d / t = 400 m / 50 s = 8 m/s.",
+        help: "La velocidad promedio es la distancia total dividida por el tiempo total."
+    }
+];
+
+// Inicializar variables
+let currentQuestionIndex = 0;
+let score = 0;
+
+// Función para mezclar preguntas
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+// Función para iniciar el cuestionario
+function startQuiz() {
+    shuffleArray(questions);
+    showQuestion();
+}
+
+// Función para mostrar la pregunta actual
+function showQuestion() {
+    const quizContainer = document.getElementById("quiz");
+    quizContainer.innerHTML = ""; // Limpiar contenido anterior
+    const currentQuestion = questions[currentQuestionIndex];
+    
+    const questionElement = document.createElement("div");
+    questionElement.className = "question";
+    questionElement.textContent = currentQuestion.question;
+    quizContainer.appendChild(questionElement);
+    
+    const optionsContainer = document.createElement("div");
+    optionsContainer.className = "options";
+    currentQuestion.options.forEach((option, index) => {
+        const button = document.createElement("button");
+        button.textContent = option;
+        button.onclick = () => selectAnswer(index);
+        optionsContainer.appendChild(button);
+    });
+    
+    quizContainer.appendChild(optionsContainer);
+    
+    // Mostrar la ayuda correspondiente
+    const helpBox = document.getElementById("help");
+    helpBox.innerHTML = `<strong>Ayuda:</strong> ${currentQuestion.help}`;
+}
+
+// Función para seleccionar respuesta
+function selectAnswer(selectedIndex) {
+    const currentQuestion = questions[currentQuestionIndex];
+    const feedbackContainer = document.getElementById("result");
+    const scoreContainer = document.getElementById("score");
+
+    // Obtener todos los botones de opciones
+    const buttons = document.querySelectorAll(".options button");
+
+    // Deshabilitar todos los botones
+    buttons.forEach((button, index) => {
+        button.disabled = true; // Deshabilitar todas las opciones
+
+        // Marcar la opción seleccionada y la correcta
+        if (index === selectedIndex) {
+            button.classList.add("selected"); // Marcar la opción seleccionada
+            if (index === currentQuestion.correct) {
+                button.classList.add("correct"); // Opción correcta
+            } else {
+                button.classList.add("incorrect"); // Opción incorrecta
+            }
+        } else if (index === currentQuestion.correct) {
+            button.classList.add("correct"); // Marcar la opción correcta
+        }
+    });
+
+    if (selectedIndex === currentQuestion.correct) {
+        feedbackContainer.innerHTML = `<span class="correct">Correcto!</span> ${currentQuestion.feedback}`;
+        score += 1; // Sumar puntos si es correcto
+    } else {
+        feedbackContainer.innerHTML = `<span class="incorrect">Incorrecto.</span> ${currentQuestion.feedback}`;
+    }
+
+    scoreContainer.innerHTML = `Puntaje: ${score}`;
+    document.getElementById("next").style.display = "block"; // Mostrar botón "Siguiente"
+}
+
+
+// Función para ir a la siguiente pregunta
+document.getElementById("next").onclick = function() {
+    currentQuestionIndex++;
+    if (currentQuestionIndex < questions.length) {
+        showQuestion();
+        document.getElementById("result").innerHTML = ""; // Limpiar resultado
+        document.getElementById("next").style.display = "none"; // Ocultar botón "Siguiente"
+    } else {
+        document.getElementById("quiz").innerHTML = "<h2>¡Cuestionario terminado!</h2>";
+        document.getElementById("next").style.display = "none"; // Ocultar botón "Siguiente"
+    }
+};
+
+// Iniciar el cuestionario
+startQuiz();
+
+    </script>
 </body>
 </html>
