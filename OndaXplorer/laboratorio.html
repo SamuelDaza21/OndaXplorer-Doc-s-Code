@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="img/logopagina.png" type="image">
+    <title>LAB</title>
+    <!--La siguiente linea me permite importar iconos para el menu-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<style>
+    body {
+  background-image: url(img/f1.jpg); /* Light gray background */
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+.menu {
+    flex-direction: column;
+}
+
+.buscador-container input[type="text"] {
+    width: 80%; /* Ancho ajustado para móviles */
+}
+
+.cards-wrapper {
+    flex-direction: column;
+}
+
+.card {
+    width: 100%; /* Tarjetas ocupan el ancho completo en móviles */
+}
+}
+
+@media (max-width: 480px) {
+.logo-menu h1 {
+    font-size: 20px; /* Ajusta el tamaño del título */
+}
+
+.menu li a {
+    font-size: 16px; /* Ajusta el tamaño de los enlaces */
+}
+
+.buscador-container .button {
+    width: 30px; /* Botón más pequeño */
+}
+
+.buscador-container input[type="text"] {
+    width: 70%; /* Ancho ajustado para móviles */
+}
+}
+
+/*Comandos para la pagina principal*/
+/*Header y menu de navegacion*/
+.paginaprincipal {
+  display: flex;               /* Hacer que el contenedor sea flex */
+  flex-direction: column;      /* Alinear elementos en columna */
+  min-height: 100vh;          /* Hacer que el contenedor ocupe al menos el alto de la pantalla */
+  animation: fadein 1s ease-in-out;
+  position: relative;
+  z-index: 1;
+}
+
+.logo-menu {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #f0f0f0; /* Light gray background */
+  border-bottom: 1px solid #808080; /* Medium gray border */
+}
+
+.logo-menu img {
+  height: 50px;
+  width: auto;
+  margin-right: 10px;
+}
+
+.logo-menu h1 {
+  font-size: 24px;
+  margin: 0;
+  color: #333333; /* Dark charcoal gray for text */
+}
+
+.menu {
+  margin-left: auto;
+}
+
+.menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+
+.menu li {
+  margin: 0 2px;
+}
+
+.menu li a {
+  text-decoration: none;
+  color: #474747; /* Light blue for links */
+  font-size: 18px;
+}
+
+.menu li a:hover {
+  color: #808080; /* Medium gray on hover */
+}
+
+/* Contenedor principal del menú */
+.menu {
+  display: flex;
+  align-items: center;
+  gap: 0px;
+}
+
+/* Estilo para los elementos de lista */
+.menu li {
+  list-style-type: none;
+  transition: transform 0.3s ease;
+}
+
+/* Estilo para los enlaces con íconos */
+.icon-item {
+  display: flex;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  background-color: rgba(0, 191, 255, 0); /* Transparent light blue */
+  color: #4d4d4d; /* Light blue */
+  text-decoration: none;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  padding: 0 10px;
+}
+
+/* Estilo para los íconos */
+.icon-item i {
+  font-size: 24px;
+  transition: color 0.3s ease;
+  min-width: 24px;
+}
+
+/* Estilo para el texto asociado */
+.icon-text {
+  opacity: 0;
+  max-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  transition: opacity 0.3s ease, max-width 0.3s ease, margin-left 0.3s ease;
+}
+
+/* Efecto al pasar el ratón sobre el ítem */
+.icon-item:hover {
+  width: auto;
+  background-color: rgba(128, 128, 128, 0.2); /* Semi-transparent medium gray */
+}
+
+.icon-item:hover .icon-text {
+  opacity: 1;
+  max-width: 120px;
+  margin-left: 10px;
+}
+
+.icon-item:hover i {
+  color: #333333; /* Dark charcoal gray */
+}
+
+/* Mueve solo los ítems necesarios para hacer espacio */
+.menu li:hover ~ li {
+  transform: translateX(10px);
+}
+
+/*Comandos para la busqueda*/
+/* Ajustes generales del nav */
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  background-color: #f0f0f08e; /* Light gray background */
+  padding: 5px;
+}
+
+/* Estilos generales del contenedor del buscador */
+.buscador-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+/* Estilo para el campo de búsqueda */
+.buscador-container input[type="text"] {
+  padding: 5px;
+  border-radius: 4px;
+  font-size: 16px;
+  width: 0;
+  box-sizing: border-box;
+  transition: width 0.4s ease, opacity 0.4s ease;
+  opacity: 0;
+  visibility: hidden;
+  border: 2px solid #808080; /* Medium gray border */
+}
+
+/* Estilo para el botón de búsqueda */
+.buscador-container .button {
+width: 35px;
+height: 35px;
+border-radius: 50%;
+background-color: #363636; /* Color de fondo */
+color: #F0F0F0; /* Color del texto */
+font-size: 16px;
+border: none;
+cursor: pointer;
+display: flex;
+align-items: center; /* Centra verticalmente */
+justify-content: center; /* Centra horizontalmente */
+position: relative;
+overflow: hidden;
+transition: background-color 0.3s ease, width 0.4s ease, border-radius 0.4s ease;
+}
+
+/* Estilo para el icono dentro del botón */
+.buscador-container .button i {
+  font-size: 20px;
+  line-height: 1; /* Asegura que no haya espacio extra */
+}
+
+  
+  /* Estilo para el texto del botón */
+  .buscador-container .button .button-text {
+    position: absolute;
+    opacity: 0;
+    visibility: hidden;
+    white-space: nowrap;
+    transition: opacity 0.4s ease, visibility 0.4s ease, transform 0.4s ease;
+    transform: translateX(10px);
+  }
+  
+  /* Mostrar input y texto cuando se pasa el mouse por encima */
+  .buscador-container:hover input[type="text"] {
+    width: 300px;
+    height: 35px;
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  .buscador-container:hover .button {
+    width: 100px;
+    height: 35px;
+    border-radius: 5px;
+    background-color: #808080; /* Medium gray on hover */
+  }
+  .buscador-container:hover .button .button-text {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(35px);
+  }
+  /*Texto alternativo del buscador*/
+  .glass {
+    position: Fixed;
+    bottom: 100px;
+    right: 1000px;
+    width: 300px;
+    height: auto;
+  }
+  
+  .glass-effect {
+    width: 100%;
+    padding: 20px;
+    background: rgba(85, 84, 84, 0.1); /* Semi-transparent medium gray */
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); 
+    color: #333333; /* Dark charcoal gray text */
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  h1, p {
+    margin: 0;
+    padding: 0;
+  }
+  footer {
+    backdrop-filter: blur(10px); /* Efecto de desenfoque */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); 
+    color: #333333; /* Color del texto */
+    background: rgba(85, 84, 84, 0.1); /* Color de fondo semi-transparente */
+    margin-top: auto;
+    position: relative;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  
+  .footer-content {
+    display: flex;
+    justify-content: space-between; /* Distribuye los elementos: izquierda, centro, derecha */
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+  }
+  
+  .footer-content img {
+    width: 150px; /* Tamaño ajustado de la imagen */
+    height: auto;
+    margin-right: 20px; /* Espacio entre la imagen y el centro */
+  }
+  
+  .footer-info {
+    text-align: center;
+    flex: 1; /* Para que ocupe el espacio central */
+    font-size: 12px; /* Tamaño de fuente más pequeño */
+  }
+  
+  .footer-info h3 {
+    margin-bottom: 10px;
+    font-size: 16px; /* Título más discreto */
+  }
+  
+  .footer-info ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .footer-info li {
+    margin: 5px 0;
+  }
+  
+  .footer-info li a {
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  .footer-info li a:hover {
+    color: #292929; /* Cambia de color al pasar el ratón */
+  }
+  
+  .sociales {
+    display: flex;
+    flex-direction: column; /* Coloca las redes sociales en columna */
+    align-items: flex-end; /* Alinea las redes sociales a la derecha */
+  }
+  
+  .redes {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .redes li {
+    list-style: none;
+  }
+  
+  .redes li a {
+    text-decoration: none;
+    font-size: 24px;
+    color: #6e6e6e;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+  }
+  
+  .redes li a:hover {
+    transform: translateY(-3px);
+  }
+  
+  /* Efectos hover para los iconos */
+  .redes li a.facebook:hover {
+    color: #4e75c7;
+    filter: drop-shadow(0 0 5px #3b5998)
+            drop-shadow(0 0 10px #3b5998);
+  }
+  
+  .redes li a.instagram:hover {
+    background-image: linear-gradient(135deg, #F58529, #DD2A7B, #8134AF, #515BD4);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 0 5px #F58529)
+            drop-shadow(0 0 10px #DD2A7B);
+  }
+  
+  .redes li a.github:hover {
+    color: #333333;
+    filter: drop-shadow(0 0 5px #333333)
+            drop-shadow(0 0 10px #333333);
+  }
+  
+  .redes li a.twitter:hover {
+    color: #1DA1F2;
+    filter: drop-shadow(0 0 5px #1DA1F2)
+            drop-shadow(0 0 10px #1DA1F2);
+  }
+  
+  /* Texto del copyright centrado */
+  .footer-copy {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 12px;  
+    width: 100%;
+  }
+/*EJERCICIOS DEL LABORATORIO*/  
+  .iframe-container {
+    display: flex;
+    flex-direction: column; /* Cambia a 'row' si quieres que estén en fila */
+    align-items: center;
+    justify-content: center;
+    gap: 20px; /* Espacio entre los iframes */
+    padding: 20px;
+}
+.xp {
+    border: 1px solid #ccc; /* Borde del iframe */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1); /* Sombra */
+}
+</style>
+</head>
+<body>
+    <!--Codigo del cuerpo de la pagina web-->
+    <div class="paginaprincipal">
+        <header class="logo-menu">
+            <img src="img/logopagina.png" alt="OndaXplorer" class="">
+            <h1>OndaXplorer</h1>
+            <nav class="menu">
+              <ul>
+                <li>
+                    <a href="temas.html" class="icon-item">
+                       <i class="fas fa-home"></i>
+                       <span class="icon-text">Inicio</span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="ejercicios.html" class="icon-item">
+                        <i class="fas fa-pencil-alt"></i>
+                        <span class="icon-text">Ejercicios</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="laboratorio.html" class="icon-item">
+                        <i class="fas fa-flask"></i>
+                        <span class="icon-text">Laboratorio</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="info.html" class="icon-item">
+                        <i class="fas fa-info-circle"></i>
+                        <span class="icon-text">Acerca de nosotros</span>
+                    </a>
+                </li>
+
+            </ul>
+    
+            </nav>
+        </header>
+        <!--Comandos para crear una barra de busqueda-->
+        <nav>
+            
+            <div class="buscador-container">
+            <form action="https://www.google.com/search" method="get">
+                <div class="buscador-container">
+                    <input type="text" name="q" placeholder="Buscar en Google" required>
+                    <button type="submit" class="button">
+                        <i class="fas fa-search"></i>
+                        <span class="button-text">Buscar</span>
+                    </button>
+                </div>
+            </form>     
+            </div>
+        </nav><div class="iframe-container">
+          <iframe class="xp" src="Lab/mas.html" width="1366" height="1366" frameborder="0"></iframe>
+          <iframe class="xp" src="Lab/Ondas.html" width="1366" height="768" frameborder="0"></iframe>
+          <iframe class="xp" src="Lab/Espejoslab.html" width="1366" height="768" frameborder="0"></iframe>
+          <iframe class="xp" src="Lab/bolos.html" width="1366" height="768" frameborder="0"></iframe>
+          <iframe class="xp" src="Lab/energia.html" width="1366" height="1700" frameborder="0"></iframe>
+
+      </div>
+
+        <!--Footer-->
+        <!-- Redes sociales debajo del texto -->
+        <footer>
+          <div class="footer-content">
+              <img src="img/IMAGOTIPO VERTICAL NEGRO.png" alt="ucundinamarca">
+      
+              <div class="footer-info">
+                  <h3>Contacto</h3>
+                  <p>Si tienes alguna pregunta, no dudes en contactarnos a nuestros correos universitarios o a través de las redes sociales.</p>
+                  <ul>
+                      <li>Samuel Arturo Daza Criado - <a href="mailto:sarturodaza@ucundinamarca.edu.co">sarturodaza@ucundinamarca.edu.co</a></li>
+                      <li>Jayber Santiago Castro Parra - <a href="mailto:jsantiagocastro@ucundinamarca.edu.co">jsantiagocastro@ucundinamarca.edu.co</a></li>
+                      <li>Natalia Carolina Diaz Calderón - <a href="mailto:ncarolinadiaz@ucundinamarca.edu.co">ncarolinadiaz@ucundinamarca.edu.co</a></li>
+                      <li>Maria Alejandra Rubio Cárdenas - <a href="mailto:malejandrarubio@ucundinamarca.edu.co">malejandrarubio@ucundinamarca.edu.co</a></li>
+                  </ul>
+              </div>
+      
+              <div class="sociales">
+                  <ul class="redes">
+                      <li>
+                          <a href="https://www.facebook.com/share/LvQiRqq2j7ahfH8N/?mibextid=qi2Omg" target="_blank" class="facebook">
+                              <i class="fab fa-facebook"></i>
+                          </a>
+                      </li>
+                      <li>
+                          <a href="https://www.instagram.com/ondaxplorer?igsh=enNrM3UxZW9rN2o0" target="_blank" class="instagram">
+                              <i class="fab fa-instagram"></i>
+                          </a>
+                      </li>
+                      <li>
+                          <a href="https://twitter.com/" target="_blank" class="twitter">
+                              <i class="fab fa-twitter"></i>
+                          </a>
+                      </li>
+                      <li>
+                          <a href="https://github.com/SamuelDaza21/OndaXplorer-Doc-s-Code/tree/main" target="_blank" class="github">
+                              <i class="fab fa-github"></i>
+                          </a>
+                      </li>
+                  </ul>
+              </div>
+          </div>
+      
+          <p class="footer-copy">&copy; 2024 OndaXplorer - Todos los derechos reservados.</p>
+      </footer>
+      
+      
+  </div>
+</div>
+<script src="codigo.js"></script>
+</body>
+</html>

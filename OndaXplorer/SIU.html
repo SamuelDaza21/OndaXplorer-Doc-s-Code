@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="img/logopagina.png" type="image">
+    <title>Sistema Internacional de Unidades</title>
+    <!--La siguiente linea me permite importar iconos para el menu-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+    background-image: url(img/f1.jpg); /* Light gray background */
+  }
+  
+  /* Responsividad */
+  @media (max-width: 768px) {
+  .menu {
+      flex-direction: column;
+  }
+  
+  .buscador-container input[type="text"] {
+      width: 80%; /* Ancho ajustado para móviles */
+  }
+  
+  .cards-wrapper {
+      flex-direction: column;
+  }
+  
+  .card {
+      width: 100%; /* Tarjetas ocupan el ancho completo en móviles */
+  }
+  }
+  
+  @media (max-width: 480px) {
+  .logo-menu h1 {
+      font-size: 20px; /* Ajusta el tamaño del título */
+  }
+  
+  .menu li a {
+      font-size: 16px; /* Ajusta el tamaño de los enlaces */
+  }
+  
+  .buscador-container .button {
+      width: 30px; /* Botón más pequeño */
+  }
+  
+  .buscador-container input[type="text"] {
+      width: 70%; /* Ancho ajustado para móviles */
+  }
+  }
+  
+  /*Comandos para la pagina principal*/
+  /*Header y menu de navegacion*/
+  .paginaprincipal {
+    display: flex;               /* Hacer que el contenedor sea flex */
+    flex-direction: column;      /* Alinear elementos en columna */
+    min-height: 100vh;          /* Hacer que el contenedor ocupe al menos el alto de la pantalla */
+    animation: fadein 1s ease-in-out;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .logo-menu {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #f0f0f0; /* Light gray background */
+    border-bottom: 1px solid #808080; /* Medium gray border */
+  }
+  
+  .logo-menu img {
+    height: 50px;
+    width: auto;
+    margin-right: 10px;
+  }
+  
+  .logo-menu h1 {
+    font-size: 24px;
+    margin: 0;
+    color: #333333; /* Dark charcoal gray for text */
+  }
+  
+  .menu {
+    margin-left: auto;
+  }
+  
+  .menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+  }
+  
+  .menu li {
+    margin: 0 2px;
+  }
+  
+  .menu li a {
+    text-decoration: none;
+    color: #474747; /* Light blue for links */
+    font-size: 18px;
+  }
+  
+  .menu li a:hover {
+    color: #808080; /* Medium gray on hover */
+  }
+  
+  /* Contenedor principal del menú */
+  .menu {
+    display: flex;
+    align-items: center;
+    gap: 0px;
+  }
+  
+  /* Estilo para los elementos de lista */
+  .menu li {
+    list-style-type: none;
+    transition: transform 0.3s ease;
+  }
+  
+  /* Estilo para los enlaces con íconos */
+  .icon-item {
+    display: flex;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    background-color: rgba(0, 191, 255, 0); /* Transparent light blue */
+    color: #4d4d4d; /* Light blue */
+    text-decoration: none;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    padding: 0 10px;
+  }
+  
+  /* Estilo para los íconos */
+  .icon-item i {
+    font-size: 24px;
+    transition: color 0.3s ease;
+    min-width: 24px;
+  }
+  
+  /* Estilo para el texto asociado */
+  .icon-text {
+    opacity: 0;
+    max-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    transition: opacity 0.3s ease, max-width 0.3s ease, margin-left 0.3s ease;
+  }
+  
+  /* Efecto al pasar el ratón sobre el ítem */
+  .icon-item:hover {
+    width: auto;
+    background-color: rgba(128, 128, 128, 0.2); /* Semi-transparent medium gray */
+  }
+  
+  .icon-item:hover .icon-text {
+    opacity: 1;
+    max-width: 120px;
+    margin-left: 10px;
+  }
+  
+  .icon-item:hover i {
+    color: #333333; /* Dark charcoal gray */
+  }
+  
+  /* Mueve solo los ítems necesarios para hacer espacio */
+  .menu li:hover ~ li {
+    transform: translateX(10px);
+  }
+  
+  /*Comandos para la busqueda*/
+  /* Ajustes generales del nav */
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    background-color: #f0f0f08e; /* Light gray background */
+    padding: 5px;
+  }
+  
+  /* Estilos generales del contenedor del buscador */
+  .buscador-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+  
+  /* Estilo para el campo de búsqueda */
+  .buscador-container input[type="text"] {
+    padding: 5px;
+    border-radius: 4px;
+    font-size: 16px;
+    width: 0;
+    box-sizing: border-box;
+    transition: width 0.4s ease, opacity 0.4s ease;
+    opacity: 0;
+    visibility: hidden;
+    border: 2px solid #808080; /* Medium gray border */
+  }
+  
+  /* Estilo para el botón de búsqueda */
+  .buscador-container .button {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background-color: #363636; /* Color de fondo */
+  color: #F0F0F0; /* Color del texto */
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center; /* Centra verticalmente */
+  justify-content: center; /* Centra horizontalmente */
+  position: relative;
+  overflow: hidden;
+  transition: background-color 0.3s ease, width 0.4s ease, border-radius 0.4s ease;
+  }
+  
+  /* Estilo para el icono dentro del botón */
+  .buscador-container .button i {
+    font-size: 20px;
+    line-height: 1; /* Asegura que no haya espacio extra */
+  }
+  
+    
+    /* Estilo para el texto del botón */
+    .buscador-container .button .button-text {
+      position: absolute;
+      opacity: 0;
+      visibility: hidden;
+      white-space: nowrap;
+      transition: opacity 0.4s ease, visibility 0.4s ease, transform 0.4s ease;
+      transform: translateX(10px);
+    }
+    
+    /* Mostrar input y texto cuando se pasa el mouse por encima */
+    .buscador-container:hover input[type="text"] {
+      width: 300px;
+      height: 35px;
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .buscador-container:hover .button {
+      width: 100px;
+      height: 35px;
+      border-radius: 5px;
+      background-color: #808080; /* Medium gray on hover */
+    }
+    .buscador-container:hover .button .button-text {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(35px);
+    }
+/*CUESTIONARIO*/
+.container {
+    max-width: 800px;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+h1 {
+    color: #333;
+    text-align: center;
+}
+.question {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #e9ecef;
+    border-radius: 5px;
+}
+.options {
+    display: flex;
+    flex-direction: column;
+}
+button {
+    margin-top: 5px;
+    padding: 10px;
+    background-color: #007bff;
+    color: rgb(0, 0, 0);
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+button:hover {
+    background-color: #0056b3;
+}
+.feedback {
+    margin-top: 10px;
+    font-weight: bold;
+}
+.correct {
+    color: rgb(0, 59, 0);
+}
+.incorrect {
+    color: rgb(104, 0, 0);
+}
+#result {
+    text-align: center;
+    font-size: 1.2em;
+    margin-top: 20px;
+}
+/* Nuevas clases para opciones seleccionadas */
+.selected {
+    border: 2px solid #2196F3; /* Azul para opción seleccionada */
+    background-color: #e7f3ff; /* Color de fondo suave */
+}
+
+button.correct {
+    background-color: #28a745; /* Verde para respuestas correctas */
+}
+
+button.incorrect {
+    background-color: #dc3545; /* Rojo para respuestas incorrectas */
+}
+
+/*Ventana de ayuda y puntaje*/
+.score-help-container {
+    position: absolute; /* Posiciona el contenedor en relación a su padre */
+    top: 80px; /* Ajusta según el espacio que quieras debajo del menú */
+    left: 20px; /* Espacio desde la izquierda */
+}
+
+.card {
+    background: rgba(240, 240, 240, 0.6); /* Fondo con un color claro y cierta opacidad */
+    backdrop-filter: blur(10px); /* Efecto de vidrio borroso */
+    border: 2px solid; /* Bordes de 2px */
+    border-image: linear-gradient(to left, #f7ba2b 0%, #ea5358 100%) 1; /* Borde con degradado */
+    width: 250px; /* Ancho de la tarjeta */
+    height: 154px; /* Altura de la tarjeta */
+    border-radius: 1rem; /* Bordes redondeados */
+    overflow: hidden; /* Evita que el contenido se desborde */
+    position: relative; /* Posicionamiento relativo para el pseudo-elemento */
+    display: flex; /* Usar flexbox para centrar el contenido */
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
+    transition: background 0.5s; /* Transición suave para el fondo */
+}
+
+.card-info {
+    --color: #181818; /* Color del texto inicial */
+    color: var(--color); /* Aplica el color */
+    display: flex; /* Usar flexbox para apilar el contenido */
+    flex-direction: column; /* Apila el contenido en columna */
+    justify-content: center; /* Centra verticalmente */
+    align-items: center; /* Centra horizontalmente */
+    width: 100%; /* Ancho completo */
+    height: 100%; /* Altura completa */
+    overflow: hidden; /* Evita el desbordamiento */
+    border-radius: .7rem; /* Bordes redondeados */
+}
+
+.score {
+    font-weight: bold; /* Texto en negrita */
+    letter-spacing: .1em; /* Espaciado entre letras */
+    margin: 5px 0; /* Margen entre textos */
+}
+
+/* El texto de ayuda está oculto inicialmente */
+.help {
+    font-weight: bold; /* Texto en negrita */
+    letter-spacing: .1em; /* Espaciado entre letras */
+    margin: 5px 0; /* Margen entre textos */
+    opacity: 0; /* Ocultar texto */
+    transition: opacity 0.5s; /* Transición suave para la opacidad */
+}
+
+/* Mostrar el texto de ayuda al pasar el mouse */
+.card:hover .help {
+    opacity: 1; /* Cambia la opacidad a 1 */
+}
+
+/* Hover effects */
+.card:hover {
+    background: rgba(240, 240, 240, 0.8); /* Cambia el fondo al hacer hover */
+}
+
+
+/*FOOTER*/
+footer {
+  backdrop-filter: blur(10px); /* Efecto de desenfoque */
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); 
+  color: #333333; /* Color del texto */
+  background: rgba(85, 84, 84, 0.1); /* Color de fondo semi-transparente */
+  margin-top: auto;
+  position: relative;
+  padding: 30px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between; /* Distribuye los elementos: izquierda, centro, derecha */
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.footer-content img {
+  width: 150px; /* Tamaño ajustado de la imagen */
+  height: auto;
+  margin-right: 20px; /* Espacio entre la imagen y el centro */
+}
+
+.footer-info {
+  text-align: center;
+  flex: 1; /* Para que ocupe el espacio central */
+  font-size: 12px; /* Tamaño de fuente más pequeño */
+}
+
+.footer-info h3 {
+  margin-bottom: 10px;
+  font-size: 16px; /* Título más discreto */
+}
+
+.footer-info ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-info li {
+  margin: 5px 0;
+}
+
+.footer-info li a {
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-info li a:hover {
+  color: #292929; /* Cambia de color al pasar el ratón */
+}
+
+.sociales {
+  display: flex;
+  flex-direction: column; /* Coloca las redes sociales en columna */
+  align-items: flex-end; /* Alinea las redes sociales a la derecha */
+}
+
+.redes {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.redes li {
+  list-style: none;
+}
+
+.redes li a {
+  text-decoration: none;
+  font-size: 24px;
+  color: #6e6e6e;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+}
+
+.redes li a:hover {
+  transform: translateY(-3px);
+}
+
+/* Efectos hover para los iconos */
+.redes li a.facebook:hover {
+  color: #4e75c7;
+  filter: drop-shadow(0 0 5px #3b5998)
+          drop-shadow(0 0 10px #3b5998);
+}
+
+.redes li a.instagram:hover {
+  background-image: linear-gradient(135deg, #F58529, #DD2A7B, #8134AF, #515BD4);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 5px #F58529)
+          drop-shadow(0 0 10px #DD2A7B);
+}
+
+.redes li a.github:hover {
+  color: #333333;
+  filter: drop-shadow(0 0 5px #333333)
+          drop-shadow(0 0 10px #333333);
+}
+
+.redes li a.twitter:hover {
+  color: #1DA1F2;
+  filter: drop-shadow(0 0 5px #1DA1F2)
+          drop-shadow(0 0 10px #1DA1F2);
+}
+
+/* Texto del copyright centrado */
+.footer-copy {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 12px;  
+  width: 100%;
+}
+
+    </style>
+</head>
+<body>
+    <!--Codigo del cuerpo de la pagina web-->
+    <div class="paginaprincipal">
+        <header class="logo-menu">
+            <img src="img/logopagina.png" alt="OndaXplorer" class="">
+            <h1>OndaXplorer</h1>
+            <nav class="menu">
+                <ul>
+                    <li>
+                        <a href="temas.html" class="icon-item">
+                           <i class="fas fa-home"></i>
+                           <span class="icon-text">Inicio</span>
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a href="ejercicios.html" class="icon-item">
+                            <i class="fas fa-pencil-alt"></i>
+                            <span class="icon-text">Ejercicios</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="laboratorio.html" class="icon-item">
+                            <i class="fas fa-flask"></i>
+                            <span class="icon-text">Laboratorio</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="info.html" class="icon-item">
+                            <i class="fas fa-info-circle"></i>
+                            <span class="icon-text">Acerca de nosotros</span>
+                        </a>
+                    </li>
+    
+                </ul>
+    
+            </nav>
+        </header>
+        <!--Comandos para crear una barra de busqueda-->
+        <nav>
+            
+            <div class="buscador-container">
+            <form action="https://www.google.com/search" method="get">
+                <div class="buscador-container">
+                    <input type="text" name="q" placeholder="Buscar en Google" required>
+                    <button type="submit" class="button">
+                        <i class="fas fa-search"></i>
+                        <span class="button-text">Buscar</span>
+                    </button>
+                </div>
+            </form>     
+            </div>
+        </nav>
+        <!--Ventana de ayuda y puntaje-->
+        <div class="score-help-container">
+            <div class="card">
+                <div class="card-info">
+                    <p class="score" id="score">Puntaje: 0</p>
+                    <p class="help" id="help"></p>
+                </div>
+            </div>
+        </div>
+        <!--EJERCICIOS O CUESTIONARIO-->
+        <div class="container">
+            <h1>Sistema Internacional de Unidades</h1>
+            <div id="quiz"></div>
+            <div id="result"></div>
+            <button id="next" style="display: none;">Siguiente</button>
+        </div>
+</div>
+<!--FOOTER-->
+<footer>
+    <div class="footer-content">
+        <img src="img/IMAGOTIPO VERTICAL NEGRO.png" alt="ucundinamarca">
+
+        <div class="footer-info">
+            <h3>Contacto</h3>
+            <p>Si tienes alguna pregunta, no dudes en contactarnos a nuestros correos universitarios o a través de las redes sociales.</p>
+            <ul>
+                <li>Samuel Arturo Daza Criado - <a href="mailto:sarturodaza@ucundinamarca.edu.co">sarturodaza@ucundinamarca.edu.co</a></li>
+                <li>Jayber Santiago Castro Parra - <a href="mailto:jsantiagocastro@ucundinamarca.edu.co">jsantiagocastro@ucundinamarca.edu.co</a></li>
+                <li>Natalia Carolina Diaz Calderón - <a href="mailto:ncarolinadiaz@ucundinamarca.edu.co">ncarolinadiaz@ucundinamarca.edu.co</a></li>
+                <li>Maria Alejandra Rubio Cárdenas - <a href="mailto:malejandrarubio@ucundinamarca.edu.co">malejandrarubio@ucundinamarca.edu.co</a></li>
+            </ul>
+        </div>
+
+        <div class="sociales">
+            <ul class="redes">
+                <li>
+                    <a href="https://www.facebook.com/share/LvQiRqq2j7ahfH8N/?mibextid=qi2Omg" target="_blank" class="facebook">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.instagram.com/ondaxplorer?igsh=enNrM3UxZW9rN2o0" target="_blank" class="instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://twitter.com/" target="_blank" class="twitter">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://github.com/SamuelDaza21/OndaXplorer-Doc-s-Code/tree/main" target="_blank" class="github">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <p class="footer-copy">&copy; 2024 OndaXplorer - Todos los derechos reservados.</p>
+</footer>
+<script>
+    const questions = [
+    // Preguntas de selección múltiple
+    {
+        question: "¿Cuáles son las magnitudes fundamentales en el Sistema Internacional de Unidades (SI)?",
+        options: [
+            "Longitud, masa, tiempo, temperatura, corriente eléctrica, cantidad de sustancia, intensidad luminosa.",
+            "Longitud, volumen, masa, temperatura, velocidad, presión, energía.",
+            "Longitud, masa, tiempo, fuerza, energía, temperatura, volumen.",
+            "Longitud, masa, tiempo, volumen, intensidad luminosa, presión, cantidad de sustancia."
+        ],
+        correct: 0,
+        feedback: "Las magnitudes fundamentales en el SI son longitud, masa, tiempo, temperatura, corriente eléctrica, cantidad de sustancia e intensidad luminosa.",
+        help: "Estas magnitudes son independientes y no se pueden derivar unas de otras."
+    },
+    {
+        question: "¿Cuál es la unidad de medida de la longitud en el Sistema Internacional de Unidades (SI)?",
+        options: [
+            "Metro (m)",
+            "Kilómetro (km)",
+            "Centímetro (cm)",
+            "Milímetro (mm)"
+        ],
+        correct: 0,
+        feedback: "La unidad básica de longitud en el SI es el metro (m).",
+        help: "El metro es la distancia que recorre la luz en el vacío en un intervalo de tiempo específico."
+    },
+    {
+        question: "¿Qué representa la magnitud 'masa' en el contexto del Sistema Internacional de Unidades (SI)?",
+        options: [
+            "La cantidad de espacio que ocupa un objeto.",
+            "La cantidad de materia en un objeto.",
+            "La fuerza ejercida por un objeto en movimiento.",
+            "La energía total de un objeto."
+        ],
+        correct: 1,
+        feedback: "La masa es la cantidad de materia en un objeto, medida en kilogramos (kg).",
+        help: "No debe confundirse con el peso, que es la fuerza gravitacional que actúa sobre la masa."
+    },
+    {
+        question: "¿Cuál es la unidad de medida de la temperatura en el Sistema Internacional de Unidades (SI)?",
+        options: [
+            "Grado Celsius (°C)",
+            "Kelvin (K)",
+            "Grado Fahrenheit (°F)",
+            "Joule (J)"
+        ],
+        correct: 1,
+        feedback: "La unidad básica de temperatura en el SI es el Kelvin (K).",
+        help: "El Kelvin es una escala termodinámica que comienza en el cero absoluto."
+    },
+    {
+        question: "¿Qué magnitud fundamental se mide en amperios (A)?",
+        options: [
+            "Corriente eléctrica",
+            "Intensidad luminosa",
+            "Cantidad de sustancia",
+            "Masa"
+        ],
+        correct: 0,
+        feedback: "El amperio (A) es la unidad de medida de la corriente eléctrica.",
+        help: "La corriente eléctrica es el flujo de carga eléctrica en un circuito."
+    },
+    {
+        question: "¿Cuál es la unidad de medida de la intensidad luminosa en el Sistema Internacional de Unidades (SI)?",
+        options: [
+            "Lumen (lm)",
+            "Candela (cd)",
+            "Lux (lx)",
+            "Watt (W)"
+        ],
+        correct: 1,
+        feedback: "La unidad de medida de la intensidad luminosa en el SI es la candela (cd).",
+        help: "La candela mide la cantidad de luz emitida por una fuente en una dirección específica."
+    },
+    {
+        question: "La magnitud 'cantidad de sustancia' se mide en:",
+        options: [
+            "Moles (mol)",
+            "Gramos (g)",
+            "Kilogramos (kg)",
+            "Litros (L)"
+        ],
+        correct: 0,
+        feedback: "La cantidad de sustancia se mide en moles (mol) en el Sistema Internacional.",
+        help: "Un mol es la cantidad de sustancia que contiene tantas entidades elementales como átomos hay en 12 g de carbono-12."
+    },
+    {
+        question: "¿Qué magnitud se relaciona con la cantidad de energía en el Sistema Internacional de Unidades (SI)?",
+        options: [
+            "Joule (J)",
+            "Newton (N)",
+            "Pascal (Pa)",
+            "Watts (W)"
+        ],
+        correct: 0,
+        feedback: "La unidad de medida de la energía en el SI es el Joule (J).",
+        help: "Un Joule es el trabajo realizado cuando se aplica una fuerza de un Newton a lo largo de un metro."
+    },
+    {
+        question: "¿Cuál de las siguientes es una magnitud derivada en el Sistema Internacional de Unidades (SI)?",
+        options: [
+            "Masa",
+            "Longitud",
+            "Aceleración",
+            "Temperatura"
+        ],
+        correct: 2,
+        feedback: "La aceleración es una magnitud derivada, medida en metros por segundo al cuadrado (m/s²).",
+        help: "Las magnitudes derivadas se obtienen a partir de las magnitudes fundamentales."
+    },
+    {
+        question: "¿Qué unidad se utiliza para medir la presión en el Sistema Internacional de Unidades (SI)?",
+        options: [
+            "Pascal (Pa)",
+            "Bar (bar)",
+            "Atmosfera (atm)",
+            "Newton por metro cuadrado (N/m²)"
+        ],
+        correct: 0,
+        feedback: "La unidad de medida de la presión en el SI es el Pascal (Pa).",
+        help: "Un Pascal es equivalente a un Newton por metro cuadrado."
+    },
+
+    // Preguntas de ejercicios
+    {
+        question: "Si un objeto tiene una masa de 5 kg y se encuentra en un campo gravitacional donde g = 9.81 m/s², ¿cuál es su peso?",
+        options: ["49.05 N", "5 N", "9.81 N", "50 N"],
+        correct: 0,
+        feedback: "El peso se calcula como W = mg = 5 kg * 9.81 m/s² = 49.05 N.",
+        help: "El peso es la fuerza de gravedad que actúa sobre un objeto."
+    },
+    {
+        question: "Un objeto se mueve a una velocidad de 10 m/s y tiene una masa de 2 kg. ¿Cuál es su energía cinética?",
+        options: ["10 J", "20 J", "100 J", "50 J"],
+        correct: 1,
+        feedback: "La energía cinética se calcula como E_k = 1/2 mv² = 1/2 * 2 kg * (10 m/s)² = 100 J.",
+        help: "La energía cinética depende de la masa y la velocidad del objeto."
+    },
+    {
+        question: "Si tienes 3 moles de un gas, ¿cuántas partículas hay en total? (Usa el número de Avogadro, NA ≈ 6.022 x 10²³)",
+        options: ["1.81 x 10²³", "6.022 x 10²³", "1.81 x 10²⁴", "1.00 x 10²³"],
+        correct: 2,
+        feedback: "La cantidad total de partículas es N = n * NA = 3 moles * 6.022 x 10²³ partículas/mol = 1.81 x 10²⁴ partículas.",
+        help: "El número de Avogadro permite convertir moles a partículas."
+    },
+    {
+        question: "¿Cuál es la presión ejercida por una fuerza de 100 N sobre un área de 2 m²?",
+        options: ["50 Pa", "200 Pa", "100 Pa", "400 Pa"],
+        correct: 0,
+        feedback: "La presión se calcula como P = F/A = 100 N / 2 m² = 50 Pa.",
+        help: "La presión es la fuerza dividida por el área sobre la cual se ejerce."
+    },
+    {
+        question: "Un cuerpo tiene una longitud de 200 cm. ¿Cuál es su longitud en metros?",
+        options: ["2 m", "0.2 m", "20 m", "0.02 m"],
+        correct: 0,
+        feedback: "200 cm equivalen a 2 m (1 m = 100 cm).",
+        help: "Para convertir de centímetros a metros, divide por 100."
+    },
+    {
+        question: "Cual de estas es una ventaja que ofrece el Sistema Internacional de Unidades",
+        options: ["Facilita el intercambio de información en ciencia, tecnología y comercio.",
+             "Su estructura decimal hace que sea fácil convertir entre unidades.",
+              "Todas las unidades derivadas se construyen de manera lógica a partir de las unidades básicas.", 
+              "Todas las anteriores"],
+        correct: 3,
+        feedback: "Estas 3 son ventajas que puede ofrecer el Sistema Internacional de Unidades, desde los campos en que se emplean y su facil uso y estructura",
+        help: "puede ser usado en cualquier area, con un buen manejo y equivalencia, permite dar mas unidades de medida"
+    },
+    {
+        question: "¿Cuánto es 1 kg de fuerza en Newtons?",
+        options: ["9.81 N", "1 N", "10 N", "100 N"],
+        correct: 0,
+        feedback: "1 kg de fuerza es equivalente a 9.81 N en la Tierra.",
+        help: "La fuerza se calcula como el peso, que es la masa por la gravedad (W = mg)."
+    },
+    {
+        question: "Si un objeto tiene una masa de 10 kg y se acelera a 2 m/s², ¿cuál es la fuerza aplicada?",
+        options: ["20 N", "10 N", "5 N", "30 N"],
+        correct: 0,
+        feedback: "La fuerza se calcula como F = ma = 10 kg * 2 m/s² = 20 N.",
+        help: "Utiliza la segunda ley de Newton para calcular la fuerza."
+    }
+];
+
+// Inicializar variables
+let currentQuestionIndex = 0;
+let score = 0;
+
+// Función para mezclar preguntas
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+// Función para iniciar el cuestionario
+function startQuiz() {
+    shuffleArray(questions);
+    showQuestion();
+}
+
+// Función para mostrar la pregunta actual
+function showQuestion() {
+    const quizContainer = document.getElementById("quiz");
+    quizContainer.innerHTML = ""; // Limpiar contenido anterior
+    const currentQuestion = questions[currentQuestionIndex];
+    
+    const questionElement = document.createElement("div");
+    questionElement.className = "question";
+    questionElement.textContent = currentQuestion.question;
+    quizContainer.appendChild(questionElement);
+    
+    const optionsContainer = document.createElement("div");
+    optionsContainer.className = "options";
+    currentQuestion.options.forEach((option, index) => {
+        const button = document.createElement("button");
+        button.textContent = option;
+        button.onclick = () => selectAnswer(index);
+        optionsContainer.appendChild(button);
+    });
+    
+    quizContainer.appendChild(optionsContainer);
+    
+    // Mostrar la ayuda correspondiente
+    const helpBox = document.getElementById("help");
+    helpBox.innerHTML = `<strong>Ayuda:</strong> ${currentQuestion.help}`;
+}
+
+// Función para seleccionar respuesta
+function selectAnswer(selectedIndex) {
+    const currentQuestion = questions[currentQuestionIndex];
+    const feedbackContainer = document.getElementById("result");
+    const scoreContainer = document.getElementById("score");
+
+    // Obtener todos los botones de opciones
+    const buttons = document.querySelectorAll(".options button");
+
+    // Deshabilitar todos los botones
+    buttons.forEach((button, index) => {
+        button.disabled = true; // Deshabilitar todas las opciones
+
+        // Marcar la opción seleccionada y la correcta
+        if (index === selectedIndex) {
+            button.classList.add("selected"); // Marcar la opción seleccionada
+            if (index === currentQuestion.correct) {
+                button.classList.add("correct"); // Opción correcta
+            } else {
+                button.classList.add("incorrect"); // Opción incorrecta
+            }
+        } else if (index === currentQuestion.correct) {
+            button.classList.add("correct"); // Marcar la opción correcta
+        }
+    });
+
+    if (selectedIndex === currentQuestion.correct) {
+        feedbackContainer.innerHTML = `<span class="correct">Correcto!</span> ${currentQuestion.feedback}`;
+        score += 1; // Sumar puntos si es correcto
+    } else {
+        feedbackContainer.innerHTML = `<span class="incorrect">Incorrecto.</span> ${currentQuestion.feedback}`;
+    }
+
+    scoreContainer.innerHTML = `Puntaje: ${score}`;
+    document.getElementById("next").style.display = "block"; // Mostrar botón "Siguiente"
+}
+
+
+// Función para ir a la siguiente pregunta
+document.getElementById("next").onclick = function() {
+    currentQuestionIndex++;
+    if (currentQuestionIndex < questions.length) {
+        showQuestion();
+        document.getElementById("result").innerHTML = ""; // Limpiar resultado
+        document.getElementById("next").style.display = "none"; // Ocultar botón "Siguiente"
+    } else {
+        document.getElementById("quiz").innerHTML = "<h2>¡Cuestionario terminado!</h2>";
+        document.getElementById("next").style.display = "none"; // Ocultar botón "Siguiente"
+    }
+};
+
+// Iniciar el cuestionario
+startQuiz();
+
+</script></body>
+</html>
